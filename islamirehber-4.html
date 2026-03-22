@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İslami Rehber</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#0F6E56;--green-light:#E1F5EE;--green-mid:#1D9E75;
+  --amber:#BA7517;--amber-light:#FAEEDA;
+  --text:#2C2C2A;--text-muted:#5F5E5A;--text-hint:#888780;
+  --border:rgba(0,0,0,0.1);--card:#fff;--bg:#f7f9f7;
+}
+@media(prefers-color-scheme:dark){
+  :root{--text:#e8e6df;--text-muted:#b4b2a9;--text-hint:#888780;--border:rgba(255,255,255,0.1);--card:#1e1e1c;--bg:#141412;--green-light:#04342C;--amber-light:#412402}
+}
+html,body{height:100%;font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text)}
+.app{max-width:480px;margin:0 auto;padding:0 0 120px;min-height:100vh}
+
+.header{background:var(--green);color:#fff;padding:20px 20px 14px;position:sticky;top:0;z-index:10}
+.header-top{display:flex;align-items:center;justify-content:space-between}
+.header h1{font-size:20px;font-weight:600;letter-spacing:0.3px}
+.header-bismillah{font-family:'Amiri',serif;font-size:14px;opacity:0.85;direction:rtl}
+.header-date{font-size:12px;opacity:0.75;margin-top:6px}
+.city-selector{display:flex;align-items:center;gap:8px;margin-top:10px}
+.city-select{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);border-radius:20px;color:#fff;font-size:12px;font-weight:500;padding:5px 10px 5px 12px;font-family:'Nunito',sans-serif;cursor:pointer;appearance:none;-webkit-appearance:none;outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:26px}
+.city-select option{background:#0F6E56;color:#fff}
+
+.tabs{display:flex;background:var(--green);border-top:1px solid rgba(255,255,255,0.15);position:sticky;top:72px;z-index:9}
+.tab{flex:1;padding:10px 4px;text-align:center;font-size:12px;font-weight:500;color:rgba(255,255,255,0.65);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;user-select:none}
+.tab.active{color:#fff;border-bottom:2px solid #fff}
+
+.content{padding:16px}
+.section{margin-bottom:16px}
+.section-label{font-size:11px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:var(--text-hint);margin-bottom:10px}
+
+.prayer-card{background:var(--card);border:0.5px solid var(--border);border-radius:14px;overflow:hidden}
+.prayer-header{background:linear-gradient(135deg,#0d5e49,var(--green-mid));color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
+.prayer-city{font-size:13px;opacity:0.85;margin-top:2px}
+.prayer-next{font-size:12px;background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:20px;white-space:nowrap}
+.prayer-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.prayer-item{padding:12px 10px;text-align:center;border-right:0.5px solid var(--border);border-bottom:0.5px solid var(--border)}
+.prayer-item:nth-child(3n){border-right:none}
+.prayer-item:nth-child(4),.prayer-item:nth-child(5),.prayer-item:nth-child(6){border-bottom:none}
+.prayer-name{font-size:11px;color:var(--text-hint);margin-bottom:4px}
+.prayer-time{font-size:15px;font-weight:600;color:var(--text)}
+.prayer-item.active-prayer{background:var(--green-light)}
+.prayer-item.active-prayer .prayer-time{color:var(--green)}
+.prayer-item.active-prayer .prayer-name{color:var(--green-mid)}
+
+.countdown-bar{padding:10px 16px;display:flex;align-items:center;gap:8px;border-top:0.5px solid var(--border)}
+.countdown-dot{width:8px;height:8px;border-radius:50%;background:var(--green-mid);flex-shrink:0;animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.countdown-text{font-size:12px;color:var(--text-muted)}
+.countdown-val{font-weight:600;color:var(--green)}
+
+.ayet-card{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:16px}
+.ayet-arabic{font-family:'Amiri',serif;font-size:22px;line-height:1.9;direction:rtl;text-align:right;color:var(--text);margin-bottom:12px;padding-bottom:12px;border-bottom:0.5px solid var(--border)}
+.ayet-meal{font-size:14px;line-height:1.7;color:var(--text-muted);margin-bottom:12px}
+.ayet-ref{font-size:12px;color:var(--text-hint);margin-bottom:14px}
+.ayet-ref span{background:var(--amber-light);color:var(--amber);padding:3px 10px;border-radius:10px;font-weight:500}
+.ayet-btn{width:100%;padding:10px;border:0.5px solid var(--border);border-radius:10px;background:transparent;color:var(--green);font-size:13px;font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:background 0.15s;font-family:'Nunito',sans-serif}
+.ayet-btn:hover{background:var(--green-light)}
+.ayet-btn:disabled{opacity:0.5;cursor:not-allowed}
+
+.loading-msg{font-size:13px;color:var(--text-hint);text-align:center;padding:24px 16px}
+.error-msg{font-size:12px;color:var(--text-hint);text-align:center;padding:16px}
+
+.weather-card{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:16px}
+.weather-main{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.weather-temp{font-size:42px;font-weight:300;color:var(--text);line-height:1}
+.weather-desc{font-size:13px;color:var(--text-muted);margin-top:4px}
+.weather-icon{font-size:50px;line-height:1}
+.weather-details{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.weather-detail{background:var(--bg);border-radius:10px;padding:10px 12px}
+.weather-detail-label{font-size:11px;color:var(--text-hint);margin-bottom:2px}
+.weather-detail-val{font-size:14px;font-weight:500;color:var(--text)}
+
+.coming-soon{text-align:center;padding:60px 20px;color:var(--text-muted)}
+.coming-soon-icon{font-size:40px;margin-bottom:14px}
+.coming-soon h3{font-size:16px;font-weight:500;margin-bottom:8px;color:var(--text)}
+.coming-soon p{font-size:13px;line-height:1.7}
+
+.dua-list{display:flex;flex-direction:column;gap:12px}
+.dua-card{background:var(--card);border:0.5px solid var(--border);border-radius:14px;overflow:hidden}
+.dua-card-header{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;gap:10px}
+.dua-card-header:hover{background:var(--green-light)}
+.dua-tag{font-size:10px;font-weight:600;letter-spacing:0.6px;text-transform:uppercase;padding:3px 9px;border-radius:10px;background:var(--amber-light);color:var(--amber);white-space:nowrap;flex-shrink:0}
+.dua-title{font-size:14px;font-weight:600;color:var(--text);flex:1}
+.dua-chevron{color:var(--text-hint);transition:transform 0.25s;flex-shrink:0}
+.dua-card.open .dua-chevron{transform:rotate(180deg)}
+.dua-body{display:none;padding:0 16px 16px;border-top:0.5px solid var(--border)}
+.dua-card.open .dua-body{display:block}
+.dua-arabic{font-family:'Amiri',serif;font-size:20px;line-height:1.9;direction:rtl;text-align:right;color:var(--text);margin:14px 0 10px;padding-bottom:10px;border-bottom:0.5px solid var(--border)}
+.dua-latin{font-size:13px;line-height:1.8;color:var(--text-muted);font-style:italic;margin-bottom:10px;padding-bottom:10px;border-bottom:0.5px solid var(--border)}
+.dua-latin:empty{display:none;margin:0;padding:0;border:none}
+.dua-meaning{font-size:14px;line-height:1.75;color:var(--text)}
+.dua-note{margin-top:10px;font-size:12px;color:var(--text-hint);background:var(--bg);border-radius:8px;padding:8px 10px;border-left:2px solid var(--green-mid)}
+
+.cat-pill{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;border:0.5px solid var(--border);background:var(--card);color:var(--text-muted);cursor:pointer;white-space:nowrap;transition:all 0.15s;user-select:none}
+.cat-pill.active{background:var(--green);color:#fff;border-color:var(--green)}
+
+.quran-search-wrap{position:relative;margin-bottom:14px}
+.quran-search{width:100%;padding:11px 16px 11px 40px;border:0.5px solid var(--border);border-radius:12px;background:var(--card);color:var(--text);font-size:14px;font-family:'Nunito',sans-serif;outline:none}
+.quran-search:focus{border-color:var(--green-mid)}
+.quran-search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--text-hint)}
+.quran-search::placeholder{color:var(--text-hint)}
+
+.surah-list{display:flex;flex-direction:column;gap:2px}
+.surah-item{background:var(--card);border:0.5px solid var(--border);border-radius:12px;display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;transition:background 0.15s}
+.surah-item:hover{background:var(--green-light)}
+.surah-item.playing{background:var(--green-light);border-color:var(--green-mid)}
+.surah-num{width:34px;height:34px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--text-hint);flex-shrink:0}
+.surah-item.playing .surah-num{background:var(--green);color:#fff}
+.surah-info{flex:1;min-width:0}
+.surah-name-tr{font-size:14px;font-weight:500;color:var(--text)}
+.surah-meta{font-size:11px;color:var(--text-hint);margin-top:1px}
+.surah-name-ar{font-family:'Amiri',serif;font-size:16px;color:var(--text-muted);direction:rtl}
+.play-btn{width:36px;height:36px;border-radius:50%;border:0.5px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;color:var(--green)}
+.play-btn:hover{background:var(--green);color:#fff;border-color:var(--green)}
+.surah-item.playing .play-btn{background:var(--green);color:#fff;border-color:var(--green)}
+.no-result{text-align:center;padding:40px 16px;font-size:13px;color:var(--text-hint)}
+
+.audio-player{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--card);border-top:0.5px solid var(--border);padding:12px 16px;z-index:20;display:none}
+.audio-player.visible{display:block}
+.audio-player-title{font-size:12px;color:var(--text-hint);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.audio-controls{display:flex;align-items:center;gap:10px}
+.audio-play-pause{width:40px;height:40px;border-radius:50%;background:var(--green);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+.audio-progress-wrap{flex:1;display:flex;flex-direction:column;gap:4px}
+.audio-progress{width:100%;height:4px;-webkit-appearance:none;appearance:none;background:var(--border);border-radius:2px;outline:none;cursor:pointer}
+.audio-progress::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:var(--green);cursor:pointer}
+.audio-time{font-size:11px;color:var(--text-hint);display:flex;justify-content:space-between}
+.audio-close{width:32px;height:32px;border-radius:50%;border:0.5px solid var(--border);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-hint);flex-shrink:0}
+.audio-close:hover{background:var(--bg)}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="header-top">
+      <h1>İslami Rehber</h1>
+      <div class="header-bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px">
+      <div class="header-date" id="headerDate">Yükleniyor...</div>
+      <div class="city-selector">
+        <select class="city-select" id="citySelect" onchange="onCityChange()">
+          <option value="istanbul">🇹🇷 İstanbul</option>
+          <option value="dubai">🇦🇪 Dubai</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('home',this)">Ana Sayfa</div>
+    <div class="tab" onclick="switchTab('kuran',this)">Kur'an Dinle</div>
+    <div class="tab" onclick="switchTab('dualar',this)">Önemli Dualar</div>
+  </div>
+
+  <div class="content">
+    <div id="tab-home">
+      <div class="section">
+        <div class="section-label" id="prayerSectionLabel">Namaz Vakitleri</div>
+        <div class="prayer-card">
+          <div class="prayer-header">
+            <div>
+              <div style="font-size:15px;font-weight:600" id="prayerCityName">İstanbul</div>
+              <div class="prayer-city" id="prayerDate">—</div>
+            </div>
+            <div class="prayer-next" id="nextPrayer">Yükleniyor...</div>
+          </div>
+          <div class="prayer-grid" id="prayerGrid">
+            <div class="prayer-item"><div class="prayer-name">—</div><div class="prayer-time">—</div></div>
+            <div class="prayer-item"><div class="prayer-name">—</div><div class="prayer-time">—</div></div>
+            <div class="prayer-item"><div class="prayer-name">—</div><div class="prayer-time">—</div></div>
+            <div class="prayer-item"><div class="prayer-name">—</div><div class="prayer-time">—</div></div>
+            <div class="prayer-item"><div class="prayer-name">—</div><div class="prayer-time">—</div></div>
+            <div class="prayer-item"><div class="prayer-name">—</div><div class="prayer-time">—</div></div>
+          </div>
+          <div class="countdown-bar">
+            <div class="countdown-dot"></div>
+            <div class="countdown-text">Sonraki vakite: <span class="countdown-val" id="countdownVal">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label">Günün Ayeti</div>
+        <div class="ayet-card">
+          <div id="ayetContent"><div class="loading-msg">Ayet yükleniyor...</div></div>
+          <button class="ayet-btn" id="ayetBtn" onclick="loadRandomAyet(true)">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.6 2.4A7 7 0 1 0 14.5 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14.5 3.5V9H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Başka bir ayet göster
+          </button>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-label" id="weatherSectionLabel">Hava Durumu</div>
+        <div class="weather-card" id="weatherCard">
+          <div class="loading-msg">Hava durumu yükleniyor...</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-kuran" style="display:none">
+      <div class="quran-search-wrap">
+        <svg class="quran-search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 10l3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <input class="quran-search" type="text" id="quranSearch" placeholder="Sure adı veya numarası ile ara..." oninput="filterSurahs()" autocomplete="off">
+      </div>
+      <div class="surah-list" id="surahList"></div>
+    </div>
+
+    <div id="tab-dualar" style="display:none">
+      <div class="quran-search-wrap">
+        <svg class="quran-search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10 10l3.5 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        <input class="quran-search" type="text" id="duaSearch" placeholder="Dua ara... (başlık veya içerik)" oninput="filterDualar()" autocomplete="off">
+      </div>
+      <div id="duaCatWrap" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"></div>
+      <div class="dua-list" id="duaList"></div>
+    </div>
+  </div>
+</div>
+
+<div class="audio-player" id="audioPlayer">
+  <div class="audio-player-title" id="audioTitle">—</div>
+  <div class="audio-controls">
+    <button class="audio-play-pause" id="audioPlayPause" onclick="togglePlayPause()">
+      <svg id="iconPlay" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2.5l9 5.5-9 5.5V2.5z"/></svg>
+      <svg id="iconPause" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" style="display:none"><rect x="3" y="2" width="4" height="12" rx="1"/><rect x="9" y="2" width="4" height="12" rx="1"/></svg>
+    </button>
+    <div class="audio-progress-wrap">
+      <input class="audio-progress" type="range" id="audioProgress" min="0" max="100" value="0" oninput="seekAudio()">
+      <div class="audio-time"><span id="audioCurrentTime">0:00</span><span id="audioDuration">0:00</span></div>
+    </div>
+    <button class="audio-close" onclick="closeAudio()">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+const PRAYER_NAMES=['İmsak','Güneş','Öğle','İkindi','Akşam','Yatsı'];
+const PRAYER_KEYS=['Imsak','Sunrise','Dhuhr','Asr','Maghrib','Isha'];
+const SURE_NAMES=["","Fatiha","Bakara","Al-i İmran","Nisa","Maide","En'am","A'raf","Enfal","Tevbe","Yunus","Hud","Yusuf","Ra'd","İbrahim","Hicr","Nahl","İsra","Kehf","Meryem","Taha","Enbiya","Hac","Müminun","Nur","Furkan","Şuara","Neml","Kasas","Ankebut","Rum","Lokman","Secde","Ahzab","Sebe","Fatır","Yasin","Saffat","Sad","Zümer","Mümin","Fussilet","Şura","Zuhruf","Duhan","Casiye","Ahkaf","Muhammed","Fetih","Hucurat","Kaf","Zariyat","Tur","Necm","Kamer","Rahman","Vakıa","Hadid","Mücadele","Haşr","Mümtehine","Saf","Cuma","Münafikun","Teğabün","Talak","Tahrim","Mülk","Kalem","Hakka","Mearic","Nuh","Cin","Müzzemmil","Müddessir","Kıyame","İnsan","Mürselat","Nebe","Naziat","Abese","Tekvir","İnfitar","Mutaffifin","İnşikak","Buruc","Tarik","A'la","Gaşiye","Fecr","Beled","Şems","Leyl","Duha","İnşirah","Tin","Alak","Kadir","Beyyine","Zilzal","Adiyat","Karia","Tekasür","Asr","Hümeze","Fil","Kureyş","Maun","Kevser","Kafirun","Nasr","Tebbet","İhlas","Felak","Nas"];
+const SURE_VERSES=[7,286,200,176,120,165,206,75,129,109,123,111,43,52,99,128,111,110,98,135,112,78,118,64,77,50,227,93,88,69,60,34,30,73,54,45,83,182,88,75,85,54,53,89,59,37,35,38,29,45,60,44,55,26,78,96,45,30,44,28,22,24,13,57,19,30,33,18,27,45,44,26,47,36,33,50,40,40,46,42,29,19,36,25,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,4,7,3,6,3,5,4,5,6,5,1,4,3,4];
+const WX_CODES={0:'Açık',1:'Çoğunlukla açık',2:'Parçalı bulutlu',3:'Kapalı',45:'Sisli',48:'Buzlanmalı sis',51:'Hafif çisenti',53:'Çisenti',55:'Yoğun çisenti',61:'Hafif yağmur',63:'Yağmur',65:'Şiddetli yağmur',71:'Hafif kar',73:'Kar',75:'Yoğun kar',80:'Sağanak',81:'Kuvvetli sağanak',82:'Şiddetli sağanak',95:'Fırtına',96:'Dolulu fırtına',99:'Şiddetli dolu'};
+const WX_ICONS={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌦️',63:'🌧️',65:'🌧️',71:'❄️',73:'🌨️',75:'❄️',80:'🌦️',81:'🌧️',82:'⛈️',95:'⛈️',96:'⛈️',99:'⛈️'};
+
+const CITIES = {
+  istanbul: {
+    label: 'İstanbul',
+    flag: '🇹🇷',
+    prayer: { city: 'Istanbul', country: 'Turkey', method: 13 },
+    weather: { lat: 41.0082, lon: 28.9784, tz: 'Europe/Istanbul' }
+  },
+  dubai: {
+    label: 'Dubai',
+    flag: '🇦🇪',
+    prayer: { city: 'Dubai', country: 'United Arab Emirates', method: 8 },
+    weather: { lat: 25.2048, lon: 55.2708, tz: 'Asia/Dubai' }
+  }
+};
+
+let currentCity = 'istanbul';
+let prayerTimesCache = null;
+let nextPrayerIndex = 0;
+let countdownInterval = null;
+
+function switchTab(id,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  ['home','kuran','dualar'].forEach(t=>{
+    document.getElementById('tab-'+t).style.display=t===id?'block':'none';
+  });
+  if(id==='kuran' && !quranLoaded) buildSurahList();
+}
+
+function setHeaderDate(){
+  const d=new Date();
+  document.getElementById('headerDate').textContent=d.toLocaleDateString('tr-TR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+}
+
+function onCityChange(){
+  currentCity = document.getElementById('citySelect').value;
+  const city = CITIES[currentCity];
+  document.getElementById('prayerSectionLabel').textContent = `${city.label} Namaz Vakitleri`;
+  document.getElementById('weatherSectionLabel').textContent = `${city.label} Hava Durumu`;
+  loadPrayerTimes();
+  loadWeather();
+}
+
+function toMinutes(t){const[h,m]=t.split(':').map(Number);return h*60+m;}
+
+function findActivePrayer(times){
+  const now=new Date(),cur=now.getHours()*60+now.getMinutes();
+  const mins=PRAYER_KEYS.map(k=>toMinutes(times[k]));
+  let active=-1;
+  for(let i=0;i<mins.length;i++){if(cur>=mins[i])active=i;}
+  return{active,next:(active+1)%mins.length};
+}
+
+function formatCountdown(nextKey,times){
+  const now=new Date(),cur=now.getHours()*60+now.getMinutes()+now.getSeconds()/60;
+  let diff=toMinutes(times[nextKey])-cur;
+  if(diff<0)diff+=1440;
+  const h=Math.floor(diff/60),m=Math.floor(diff%60),s=Math.floor((diff*60)%60);
+  return h>0?`${h}s ${m}dk`:`${m}dk ${s}sn`;
+}
+
+async function loadPrayerTimes(){
+  const city = CITIES[currentCity];
+  document.getElementById('prayerGrid').innerHTML='<div style="grid-column:1/-1;padding:20px;text-align:center;font-size:12px;color:var(--text-hint)">Yükleniyor...</div>';
+  document.getElementById('nextPrayer').textContent='Yükleniyor...';
+  document.getElementById('prayerDate').textContent='—';
+  document.getElementById('countdownVal').textContent='—';
+  if(countdownInterval){clearInterval(countdownInterval);countdownInterval=null;}
+  try{
+    const d=new Date(),dd=d.getDate(),mm=d.getMonth()+1,yy=d.getFullYear();
+    const res=await fetch(`https://api.aladhan.com/v1/timingsByCity/${dd}-${mm}-${yy}?city=${encodeURIComponent(city.prayer.city)}&country=${encodeURIComponent(city.prayer.country)}&method=${city.prayer.method}`);
+    const data=await res.json();
+    const times=data.data.timings;
+    const hijri=data.data.date.hijri;
+    prayerTimesCache=times;
+
+    document.getElementById('prayerDate').textContent=`${hijri.day} ${hijri.month.en} ${hijri.year} Hicri`;
+
+    const{active,next}=findActivePrayer(times);
+    nextPrayerIndex=next;
+    const grid=document.getElementById('prayerGrid');
+    grid.innerHTML='';
+    PRAYER_KEYS.forEach((key,i)=>{
+      const div=document.createElement('div');
+      div.className='prayer-item'+(i===active?' active-prayer':'');
+      div.innerHTML=`<div class="prayer-name">${PRAYER_NAMES[i]}</div><div class="prayer-time">${times[key]}</div>`;
+      grid.appendChild(div);
+    });
+    document.getElementById('nextPrayer').textContent=`Sıradaki: ${PRAYER_NAMES[next]}`;
+
+    // update prayer card city name
+    const cityNameEl = document.getElementById('prayerCityName');
+    if(cityNameEl) cityNameEl.textContent = city.label;
+
+    function tick(){
+      if(prayerTimesCache)document.getElementById('countdownVal').textContent=formatCountdown(PRAYER_KEYS[nextPrayerIndex],prayerTimesCache);
+    }
+    tick();
+    countdownInterval=setInterval(tick,1000);
+  }catch(e){
+    document.getElementById('prayerGrid').innerHTML='<div style="grid-column:1/-1;padding:16px;text-align:center;font-size:12px;color:var(--text-hint)">Namaz vakitleri yüklenemedi.</div>';
+  }
+}
+
+function seededRand(seed){let x=Math.sin(seed+1)*10000;return x-Math.floor(x);}
+function getTodaySeed(){const d=new Date();return d.getFullYear()*10000+d.getMonth()*100+d.getDate();}
+
+async function loadRandomAyet(forceNew){
+  const btn=document.getElementById('ayetBtn');
+  if(btn)btn.disabled=true;
+  document.getElementById('ayetContent').innerHTML='<div class="loading-msg">Ayet yükleniyor...</div>';
+  const seed=forceNew?Date.now():getTodaySeed();
+  const surah=Math.floor(seededRand(seed)*113)+1;
+  const maxVerse=SURE_VERSES[surah]||10;
+  const ayah=Math.floor(seededRand(seed+999)*maxVerse)+1;
+  try{
+    const[arRes,trRes]=await Promise.all([
+      fetch(`https://api.alquran.cloud/v1/ayah/${surah}:${ayah}/ar.alafasy`),
+      fetch(`https://api.alquran.cloud/v1/ayah/${surah}:${ayah}/tr.diyanet`)
+    ]);
+    const arData=await arRes.json();
+    const trData=await trRes.json();
+    const sureName=SURE_NAMES[surah]||`Sure ${surah}`;
+    document.getElementById('ayetContent').innerHTML=`
+      <div class="ayet-arabic">${arData.data.text}</div>
+      <div class="ayet-meal">${trData.data.text}</div>
+      <div class="ayet-ref"><span>${sureName} Suresi, ${ayah}. Ayet</span></div>
+    `;
+  }catch(e){
+    document.getElementById('ayetContent').innerHTML='<div class="error-msg">Ayet yüklenemedi.</div>';
+  }
+  if(btn)btn.disabled=false;
+}
+
+async function loadWeather(){
+  const city = CITIES[currentCity];
+  document.getElementById('weatherCard').innerHTML='<div class="loading-msg">Hava durumu yükleniyor...</div>';
+  try{
+    const res=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${city.weather.lat}&longitude=${city.weather.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,precipitation&timezone=${encodeURIComponent(city.weather.tz)}`);
+    const data=await res.json();
+    const c=data.current;
+    const code=c.weather_code;
+    document.getElementById('weatherCard').innerHTML=`
+      <div class="weather-main">
+        <div>
+          <div class="weather-temp">${Math.round(c.temperature_2m)}°C</div>
+          <div class="weather-desc">${WX_CODES[code]||'Bilinmiyor'}</div>
+        </div>
+        <div class="weather-icon">${WX_ICONS[code]||'🌡️'}</div>
+      </div>
+      <div class="weather-details">
+        <div class="weather-detail"><div class="weather-detail-label">Hissedilen</div><div class="weather-detail-val">${Math.round(c.apparent_temperature)}°C</div></div>
+        <div class="weather-detail"><div class="weather-detail-label">Nem</div><div class="weather-detail-val">${c.relative_humidity_2m}%</div></div>
+        <div class="weather-detail"><div class="weather-detail-label">Rüzgar</div><div class="weather-detail-val">${Math.round(c.wind_speed_10m)} km/s</div></div>
+        <div class="weather-detail"><div class="weather-detail-label">Yağış</div><div class="weather-detail-val">${c.precipitation} mm</div></div>
+      </div>
+    `;
+  }catch(e){
+    document.getElementById('weatherCard').innerHTML='<div class="error-msg">Hava durumu yüklenemedi.</div>';
+  }
+}
+
+// ── Kur'an Dinle ──────────────────────────────────────────
+const SURAHS=[
+  {n:1,tr:"Fatiha",ar:"الفاتحة",type:"Mekki",verses:7},
+  {n:2,tr:"Bakara",ar:"البقرة",type:"Medeni",verses:286},
+  {n:3,tr:"Al-i İmran",ar:"آل عمران",type:"Medeni",verses:200},
+  {n:4,tr:"Nisa",ar:"النساء",type:"Medeni",verses:176},
+  {n:5,tr:"Maide",ar:"المائدة",type:"Medeni",verses:120},
+  {n:6,tr:"En'am",ar:"الأنعام",type:"Mekki",verses:165},
+  {n:7,tr:"A'raf",ar:"الأعراف",type:"Mekki",verses:206},
+  {n:8,tr:"Enfal",ar:"الأنفال",type:"Medeni",verses:75},
+  {n:9,tr:"Tevbe",ar:"التوبة",type:"Medeni",verses:129},
+  {n:10,tr:"Yunus",ar:"يونس",type:"Mekki",verses:109},
+  {n:11,tr:"Hud",ar:"هود",type:"Mekki",verses:123},
+  {n:12,tr:"Yusuf",ar:"يوسف",type:"Mekki",verses:111},
+  {n:13,tr:"Ra'd",ar:"الرعد",type:"Medeni",verses:43},
+  {n:14,tr:"İbrahim",ar:"إبراهيم",type:"Mekki",verses:52},
+  {n:15,tr:"Hicr",ar:"الحجر",type:"Mekki",verses:99},
+  {n:16,tr:"Nahl",ar:"النحل",type:"Mekki",verses:128},
+  {n:17,tr:"İsra",ar:"الإسراء",type:"Mekki",verses:111},
+  {n:18,tr:"Kehf",ar:"الكهف",type:"Mekki",verses:110},
+  {n:19,tr:"Meryem",ar:"مريم",type:"Mekki",verses:98},
+  {n:20,tr:"Taha",ar:"طه",type:"Mekki",verses:135},
+  {n:21,tr:"Enbiya",ar:"الأنبياء",type:"Mekki",verses:112},
+  {n:22,tr:"Hac",ar:"الحج",type:"Medeni",verses:78},
+  {n:23,tr:"Müminun",ar:"المؤمنون",type:"Mekki",verses:118},
+  {n:24,tr:"Nur",ar:"النور",type:"Medeni",verses:64},
+  {n:25,tr:"Furkan",ar:"الفرقان",type:"Mekki",verses:77},
+  {n:26,tr:"Şuara",ar:"الشعراء",type:"Mekki",verses:227},
+  {n:27,tr:"Neml",ar:"النمل",type:"Mekki",verses:93},
+  {n:28,tr:"Kasas",ar:"القصص",type:"Mekki",verses:88},
+  {n:29,tr:"Ankebut",ar:"العنكبوت",type:"Mekki",verses:69},
+  {n:30,tr:"Rum",ar:"الروم",type:"Mekki",verses:60},
+  {n:31,tr:"Lokman",ar:"لقمان",type:"Mekki",verses:34},
+  {n:32,tr:"Secde",ar:"السجدة",type:"Mekki",verses:30},
+  {n:33,tr:"Ahzab",ar:"الأحزاب",type:"Medeni",verses:73},
+  {n:34,tr:"Sebe",ar:"سبأ",type:"Mekki",verses:54},
+  {n:35,tr:"Fatır",ar:"فاطر",type:"Mekki",verses:45},
+  {n:36,tr:"Yasin",ar:"يس",type:"Mekki",verses:83},
+  {n:37,tr:"Saffat",ar:"الصافات",type:"Mekki",verses:182},
+  {n:38,tr:"Sad",ar:"ص",type:"Mekki",verses:88},
+  {n:39,tr:"Zümer",ar:"الزمر",type:"Mekki",verses:75},
+  {n:40,tr:"Mümin",ar:"غافر",type:"Mekki",verses:85},
+  {n:41,tr:"Fussilet",ar:"فصلت",type:"Mekki",verses:54},
+  {n:42,tr:"Şura",ar:"الشورى",type:"Mekki",verses:53},
+  {n:43,tr:"Zuhruf",ar:"الزخرف",type:"Mekki",verses:89},
+  {n:44,tr:"Duhan",ar:"الدخان",type:"Mekki",verses:59},
+  {n:45,tr:"Casiye",ar:"الجاثية",type:"Mekki",verses:37},
+  {n:46,tr:"Ahkaf",ar:"الأحقاف",type:"Mekki",verses:35},
+  {n:47,tr:"Muhammed",ar:"محمد",type:"Medeni",verses:38},
+  {n:48,tr:"Fetih",ar:"الفتح",type:"Medeni",verses:29},
+  {n:49,tr:"Hucurat",ar:"الحجرات",type:"Medeni",verses:18},
+  {n:50,tr:"Kaf",ar:"ق",type:"Mekki",verses:45},
+  {n:51,tr:"Zariyat",ar:"الذاريات",type:"Mekki",verses:60},
+  {n:52,tr:"Tur",ar:"الطور",type:"Mekki",verses:49},
+  {n:53,tr:"Necm",ar:"النجم",type:"Mekki",verses:62},
+  {n:54,tr:"Kamer",ar:"القمر",type:"Mekki",verses:55},
+  {n:55,tr:"Rahman",ar:"الرحمن",type:"Medeni",verses:78},
+  {n:56,tr:"Vakıa",ar:"الواقعة",type:"Mekki",verses:96},
+  {n:57,tr:"Hadid",ar:"الحديد",type:"Medeni",verses:29},
+  {n:58,tr:"Mücadele",ar:"المجادلة",type:"Medeni",verses:22},
+  {n:59,tr:"Haşr",ar:"الحشر",type:"Medeni",verses:24},
+  {n:60,tr:"Mümtehine",ar:"الممتحنة",type:"Medeni",verses:13},
+  {n:61,tr:"Saf",ar:"الصف",type:"Medeni",verses:14},
+  {n:62,tr:"Cuma",ar:"الجمعة",type:"Medeni",verses:11},
+  {n:63,tr:"Münafikun",ar:"المنافقون",type:"Medeni",verses:11},
+  {n:64,tr:"Teğabün",ar:"التغابن",type:"Medeni",verses:18},
+  {n:65,tr:"Talak",ar:"الطلاق",type:"Medeni",verses:12},
+  {n:66,tr:"Tahrim",ar:"التحريم",type:"Medeni",verses:12},
+  {n:67,tr:"Mülk",ar:"الملك",type:"Mekki",verses:30},
+  {n:68,tr:"Kalem",ar:"القلم",type:"Mekki",verses:52},
+  {n:69,tr:"Hakka",ar:"الحاقة",type:"Mekki",verses:52},
+  {n:70,tr:"Mearic",ar:"المعارج",type:"Mekki",verses:44},
+  {n:71,tr:"Nuh",ar:"نوح",type:"Mekki",verses:28},
+  {n:72,tr:"Cin",ar:"الجن",type:"Mekki",verses:28},
+  {n:73,tr:"Müzzemmil",ar:"المزمل",type:"Mekki",verses:20},
+  {n:74,tr:"Müddessir",ar:"المدثر",type:"Mekki",verses:56},
+  {n:75,tr:"Kıyame",ar:"القيامة",type:"Mekki",verses:40},
+  {n:76,tr:"İnsan",ar:"الإنسان",type:"Medeni",verses:31},
+  {n:77,tr:"Mürselat",ar:"المرسلات",type:"Mekki",verses:50},
+  {n:78,tr:"Nebe",ar:"النبأ",type:"Mekki",verses:40},
+  {n:79,tr:"Naziat",ar:"النازعات",type:"Mekki",verses:46},
+  {n:80,tr:"Abese",ar:"عبس",type:"Mekki",verses:42},
+  {n:81,tr:"Tekvir",ar:"التكوير",type:"Mekki",verses:29},
+  {n:82,tr:"İnfitar",ar:"الانفطار",type:"Mekki",verses:19},
+  {n:83,tr:"Mutaffifin",ar:"المطففين",type:"Mekki",verses:36},
+  {n:84,tr:"İnşikak",ar:"الانشقاق",type:"Mekki",verses:25},
+  {n:85,tr:"Buruc",ar:"البروج",type:"Mekki",verses:22},
+  {n:86,tr:"Tarik",ar:"الطارق",type:"Mekki",verses:17},
+  {n:87,tr:"A'la",ar:"الأعلى",type:"Mekki",verses:19},
+  {n:88,tr:"Gaşiye",ar:"الغاشية",type:"Mekki",verses:26},
+  {n:89,tr:"Fecr",ar:"الفجر",type:"Mekki",verses:30},
+  {n:90,tr:"Beled",ar:"البلد",type:"Mekki",verses:20},
+  {n:91,tr:"Şems",ar:"الشمس",type:"Mekki",verses:15},
+  {n:92,tr:"Leyl",ar:"الليل",type:"Mekki",verses:21},
+  {n:93,tr:"Duha",ar:"الضحى",type:"Mekki",verses:11},
+  {n:94,tr:"İnşirah",ar:"الشرح",type:"Mekki",verses:8},
+  {n:95,tr:"Tin",ar:"التين",type:"Mekki",verses:8},
+  {n:96,tr:"Alak",ar:"العلق",type:"Mekki",verses:19},
+  {n:97,tr:"Kadir",ar:"القدر",type:"Mekki",verses:5},
+  {n:98,tr:"Beyyine",ar:"البينة",type:"Medeni",verses:8},
+  {n:99,tr:"Zilzal",ar:"الزلزلة",type:"Medeni",verses:8},
+  {n:100,tr:"Adiyat",ar:"العاديات",type:"Mekki",verses:11},
+  {n:101,tr:"Karia",ar:"القارعة",type:"Mekki",verses:11},
+  {n:102,tr:"Tekasür",ar:"التكاثر",type:"Mekki",verses:8},
+  {n:103,tr:"Asr",ar:"العصر",type:"Mekki",verses:3},
+  {n:104,tr:"Hümeze",ar:"الهمزة",type:"Mekki",verses:9},
+  {n:105,tr:"Fil",ar:"الفيل",type:"Mekki",verses:5},
+  {n:106,tr:"Kureyş",ar:"قريش",type:"Mekki",verses:4},
+  {n:107,tr:"Maun",ar:"الماعون",type:"Mekki",verses:7},
+  {n:108,tr:"Kevser",ar:"الكوثر",type:"Mekki",verses:3},
+  {n:109,tr:"Kafirun",ar:"الكافرون",type:"Mekki",verses:6},
+  {n:110,tr:"Nasr",ar:"النصر",type:"Medeni",verses:3},
+  {n:111,tr:"Tebbet",ar:"المسد",type:"Mekki",verses:5},
+  {n:112,tr:"İhlas",ar:"الإخلاص",type:"Mekki",verses:4},
+  {n:113,tr:"Felak",ar:"الفلق",type:"Mekki",verses:5},
+  {n:114,tr:"Nas",ar:"الناس",type:"Mekki",verses:6}
+];
+
+let quranLoaded = false;
+let currentAudio = null;
+let currentSurahN = null;
+let playingItemEl = null;
+
+function audioUrl(n){
+  const num = String(n).padStart(3,'0');
+  return `https://server8.mp3quran.net/afs/${num}.mp3`;
+}
+
+function buildSurahList(){
+  quranLoaded = true;
+  renderSurahs(SURAHS);
+}
+
+function renderSurahs(list){
+  const container = document.getElementById('surahList');
+  if(!list.length){
+    container.innerHTML='<div class="no-result">Sonuç bulunamadı</div>';
+    return;
+  }
+  container.innerHTML = list.map(s=>`
+    <div class="surah-item${currentSurahN===s.n?' playing':''}" id="surah-item-${s.n}" onclick="playSurah(${s.n})">
+      <div class="surah-num">${s.n}</div>
+      <div class="surah-info">
+        <div class="surah-name-tr">${s.tr}</div>
+        <div class="surah-meta">${s.type} · ${s.verses} ayet</div>
+      </div>
+      <div class="surah-name-ar">${s.ar}</div>
+      <button class="play-btn" onclick="event.stopPropagation();playSurah(${s.n})">
+        ${currentSurahN===s.n && currentAudio && !currentAudio.paused
+          ? `<svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="2" width="4" height="12" rx="1"/><rect x="9" y="2" width="4" height="12" rx="1"/></svg>`
+          : `<svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2.5l9 5.5-9 5.5V2.5z"/></svg>`
+        }
+      </button>
+    </div>
+  `).join('');
+}
+
+function filterSurahs(){
+  const q = document.getElementById('quranSearch').value.trim().toLowerCase();
+  if(!q){renderSurahs(SURAHS);return;}
+  const num = parseInt(q);
+  const filtered = SURAHS.filter(s=>
+    s.tr.toLowerCase().includes(q) ||
+    s.ar.includes(q) ||
+    (!isNaN(num) && s.n===num)
+  );
+  renderSurahs(filtered);
+}
+
+function formatTime(sec){
+  if(isNaN(sec)||!isFinite(sec))return'0:00';
+  const m=Math.floor(sec/60),s=Math.floor(sec%60);
+  return `${m}:${s<10?'0':''}${s}`;
+}
+
+function playSurah(n){
+  const surah = SURAHS.find(s=>s.n===n);
+  if(!surah)return;
+
+  if(currentSurahN===n && currentAudio){
+    togglePlayPause();
+    return;
+  }
+
+  if(currentAudio){
+    currentAudio.pause();
+    currentAudio.src='';
+  }
+
+  currentSurahN = n;
+  currentAudio = new Audio(audioUrl(n));
+  currentAudio.crossOrigin = 'anonymous';
+
+  document.getElementById('audioPlayer').classList.add('visible');
+  document.getElementById('audioTitle').textContent = `${surah.n}. ${surah.tr} Suresi — ${surah.ar}`;
+  document.getElementById('audioProgress').value = 0;
+  document.getElementById('audioCurrentTime').textContent = '0:00';
+  document.getElementById('audioDuration').textContent = '...';
+  setPlayIcon(false);
+
+  currentAudio.addEventListener('loadedmetadata',()=>{
+    document.getElementById('audioDuration').textContent = formatTime(currentAudio.duration);
+  });
+  currentAudio.addEventListener('timeupdate',()=>{
+    const pct = currentAudio.duration ? (currentAudio.currentTime/currentAudio.duration)*100 : 0;
+    document.getElementById('audioProgress').value = pct;
+    document.getElementById('audioCurrentTime').textContent = formatTime(currentAudio.currentTime);
+  });
+  currentAudio.addEventListener('ended',()=>{
+    setPlayIcon(true);
+    refreshSurahList();
+  });
+  currentAudio.addEventListener('play',()=>{setPlayIcon(false);refreshSurahList();});
+  currentAudio.addEventListener('pause',()=>{setPlayIcon(true);refreshSurahList();});
+
+  currentAudio.play().catch(()=>{});
+  refreshSurahList();
+}
+
+function setPlayIcon(showPlay){
+  document.getElementById('iconPlay').style.display = showPlay?'block':'none';
+  document.getElementById('iconPause').style.display = showPlay?'none':'block';
+}
+
+function togglePlayPause(){
+  if(!currentAudio)return;
+  if(currentAudio.paused) currentAudio.play();
+  else currentAudio.pause();
+}
+
+function seekAudio(){
+  if(!currentAudio||!currentAudio.duration)return;
+  currentAudio.currentTime = (document.getElementById('audioProgress').value/100)*currentAudio.duration;
+}
+
+function closeAudio(){
+  if(currentAudio){currentAudio.pause();currentAudio.src='';}
+  currentAudio=null;
+  currentSurahN=null;
+  document.getElementById('audioPlayer').classList.remove('visible');
+  refreshSurahList();
+}
+
+function refreshSurahList(){
+  const q = document.getElementById('quranSearch');
+  if(q) filterSurahs();
+}
+
+// ── end Kur'an ─────────────────────────────────────────────
+
+// ── Önemli Dualar ─────────────────────────────────────────
+const DUALAR = [
+  {
+    title: "Kısa ve Câmi Dua",
+    tag: "Genel",
+    arabic: "اللَّهُمَّ اغْفِرْ لِي وَارْحَمْنِي وَعَافِنِي وَارْزُقْنِي",
+    latin: "Allahümme'ğfir lî, verhamnî, ve âfinî, verzuknî.",
+    meaning: "Allah'ım! Beni bağışla, bana merhamet et, bana afiyet ver ve beni rızıklandır.",
+    note: "Bu dört kelime; af, merhamet, sağlık ve rızık dileğini bir arada taşır."
+  },
+  {
+    title: "Sabah Namazı Sonrası Dua",
+    tag: "Sabah",
+    arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا وَرِزْقًا طَيِّبًا وَعَمَلًا مُتَقَبَّلًا",
+    latin: "Allahümme innî es'elüke ilmen nâfi'an ve rızkan tayyiben ve amelen mütekabbela.",
+    meaning: "Ey Allah'ım, Senden şunları istiyorum: faydalı ilim, temiz ve güzel rızık ve kabul edilen ameller.",
+    note: "Peygamberimiz (s.a.v.) sabah namazından sonra bu duayı okurdu. (İbn Mace)"
+  },
+  {
+    title: "Güç ve Hidayet Duası",
+    tag: "Yardım",
+    arabic: "",
+    latin: "Allahümme innî ateberraü min havlî ve kuvvetî ve elteciü ilâ havlike ve kuvvetik. Allahümme e'innî velâ tü'in 'aleyye, vensurnî velâ tansur 'aleyye, vehdinî ve yessiril-hüdâ lî.",
+    meaning: "Allah'ım! Kendi güç ve kuvvetimden vazgeçiyor, Senin sınırsız güç ve kuvvetine sığınıyorum. Bana yardım et, aleyhime olanlara yardım etme. Beni muzaffer kıl, mağlup ettirme. Beni doğru yola ilet ve hidayeti benim için kolaylaştır.",
+    note: ""
+  },
+  {
+    title: "Ferahlık Duası (Rabbişrah)",
+    tag: "Kolaylık",
+    arabic: "رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي يَفْقَهُوا قَوْلِي",
+    latin: "Rabbişrah lî sadrî. Ve yessir lî emrî. Vahlul ukdeten min lisânî. Yefkahû kavlî.",
+    meaning: "Rabbim! Gönlüme ferahlık ver. İşimi bana kolaylaştır. Dilimdeki tutukluğu çöz. Ki sözümü anlasınlar.",
+    note: "Taha Suresi 25-28. ayetler — Hz. Musa'nın duası."
+  },
+  {
+    title: "İşlerin Rast Gitmesi İçin Dua",
+    tag: "Kolaylık",
+    arabic: "",
+    latin: "Yâ Hayyü, yâ Kayyûm! Bi rahmetike esteğîsü fe eslıh lî şe'nî küllehü ve lâ tekilnî ilâ nefsî Terfete aynin.",
+    meaning: "Ey Hayy ve Kayyum olan Allah'ım! Ancak senin rahmetine sığınırım. Benim bütün işlerimi düzelt ve beni göz açıp kapayıncaya kadar da asla nefsime bırakma.",
+    note: "Bismillahirrahmanirrahim ile başlanarak okunur. İşlerin rast gitmesi için sürekli okunması tavsiye edilir."
+  },
+  {
+    title: "Rızık Duası (Hz. Musa)",
+    tag: "Rızık",
+    arabic: "رَبِّ إِنِّي لِمَا أَنْزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ",
+    latin: "Rabbi innî limâ enzelte ileyye min hayrin fakîr.",
+    meaning: "Rabbim! Bana göndereceğin her hayra muhtacım.",
+    note: "Kasas Suresi 24. ayet. Hz. Musa'nın Medyen'de söylediği bu dua, rızık ve yardım için en güçlü dualardan biridir."
+  },
+  {
+    title: "Bereket ve Rızık Duası",
+    tag: "Rızık",
+    arabic: "",
+    latin: "Yâ Rahmân, Yâ Rahîm, Yâ Fettâh, Yâ Vehhâb. İftah lî kalbî verzuknî bilâ teab.",
+    meaning: "Ey Rahman, ey Rahim, ey Fettah, ey Vehhab! Kalbimi aç ve beni yorgunluk çektirmeksizin rızıklandır.",
+    note: "Sıkıntı ve darlık anlarında, rızık için okunur."
+  },
+  {
+    title: "Zayıflık ve Rızık Duası (Duha)",
+    tag: "Rızık",
+    arabic: "",
+    latin: "Allahümme innî daifun fekavvi fî ridâke da'fî ve huz ilelhayri binasiyetî vec'alil islame münteha ridaye. Allahümme innî daifün fekavvinî ve innî zelilün feizzeni ve innî fakirün ferzuknî.",
+    meaning: "Allah'ım! Ben zayıfım, rızanı kazanma yolunda zayıflığımı güce çevir. Beni hayra yönelt, İslam'ı rızamın nihai hedefi kıl. Allah'ım! Ben zayıfım beni güçlendir, ben zelilim beni aziz kıl, ben fakirim beni rızıklandır.",
+    note: "Duha Suresi ile birlikte okunması tavsiye edilir."
+  },
+  {
+    title: "İlim ve Fehim Duası",
+    tag: "İlim",
+    arabic: "رَبِّ زِدْنِي عِلْمًا وَفَهْمًا وَأَلْحِقْنِي فِي زُمْرَةِ الصَّالِحِينَ",
+    latin: "Rabbi zidnî ilmen ve fehmen ve elhiknî fî zumreti's-sâlihîn.",
+    meaning: "Rabbim! İlmimi ve fehmimi artır, beni salih kulların arasına kat.",
+    note: "Peygamber Efendimiz (s.a.v.) bu dua ile ilminin artmasını niyaz ederdi."
+  },
+  {
+    title: "İsra Suresi 80. Ayet Duası",
+    tag: "Kolaylık",
+    arabic: "وَقُلْ رَبِّ أَدْخِلْنِي مُدْخَلَ صِدْقٍ وَأَخْرِجْنِي مُخْرَجَ صِدْقٍ وَاجْعَلْ لِي مِنْ لَدُنْكَ سُلْطَانًا نَصِيرًا",
+    latin: "Vekul rabbi edhilnî mudhale sidkin veahricnî muhrace sidkin vec'al lî min ledunke sultânen nasîrâ.",
+    meaning: "Rabbim! Gireceğim yere dürüstlükle girmemi, çıkacağım yerden dürüstlükle çıkmamı nasip eyle; yüce katından bana yardımcı bir güç ver.",
+    note: "İsra Suresi 80. ayet. Yeni bir işe, yolculuğa veya önemli bir adıma başlarken okunur."
+  },
+  {
+    title: "Al-i İmran 26. Ayet — Mülk Duası",
+    tag: "Genel",
+    arabic: "قُلِ اللَّهُمَّ مَالِكَ الْمُلْكِ تُؤْتِي الْمُلْكَ مَنْ تَشَاءُ وَتَنْزِعُ الْمُلْكَ مِمَّنْ تَشَاءُ وَتُعِزُّ مَنْ تَشَاءُ وَتُذِلُّ مَنْ تَشَاءُ بِيَدِكَ الْخَيْرُ إِنَّكَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+    latin: "Kuli(A)llâhumme mâlikel mulki tu/tî-l mulke men teşâu vetenzi'u-l mulke mimmen teşâu vetu'izzu men teşâu vetužillu men teşâ(u)(s) biyedike-l hayr(u)(s) inneke 'alâ kulli şey-in kadîr(un).",
+    meaning: "De ki: Ey mülkün gerçek sahibi olan Allah! Sen dilediğine mülkü verirsin, dilediğinden mülkü çekip alırsın; dilediğini yüceltip aziz kılar, dilediğini alçaltıp zelil edersin. Bütün hayırlar yalnız senin elindedir. Şüphesiz sen, her şeye kâdirsin.",
+    note: "Al-i İmran Suresi 26. ayet."
+  },
+  {
+    title: "Fetih Duası",
+    tag: "Genel",
+    arabic: "إِنَّا فَتَحْنَا لَكَ فَتْحًا مُبِينًا",
+    latin: "İnna fetehna leke fethen mübina.",
+    meaning: "Şüphesiz biz sana apaçık bir fetih ihsan ettik.",
+    note: "Fetih Suresi 1. ayet. 11 kez okunarak Allah'tan başarı ve kolaylık niyaz edilir: 'Allah'ım sen başarmak istediklerimi başarmayı nasip eyle.'"
+  },
+  {
+    title: "Hızır Aleyhisselam Duası",
+    tag: "Koruma",
+    arabic: "بِسْمِ اللهِ مَا شَاءَ اللهُ لَا قُوَّةَ إِلَّا بِاللهِ مَا شَاءَ اللهُ كُلُّ نِعْمَةٍ مِنَ اللهِ مَا شَاءَ اللهُ الْخَيْرُ كُلُّهُ بِيَدِ اللهِ مَا شَاءَ اللهُ لَا يَصْرِفُ السُّوءَ إِلَّا اللهُ",
+    latin: "Bismillah maşaallah la kuvvete illa billah, maşaallah kulli nimetin minallah, maşaallah elhayrü küllihi biyedillahi, maşaallah la yusrifüsuue illallah.",
+    meaning: "Allah'ın adıyla, Allah'ın dilediği olur, güç ancak Allah'tandır. Her nimet Allah'tandır. Bütün hayır Allah'ın elindedir. Kötülüğü ancak Allah uzaklaştırır.",
+    note: "Hızır Aleyhisselam'ın kişiyi, evini ve malını koruma altına alan duası. Sabah akşam okunur."
+  },
+  {
+    title: "Ruhuna Zırh Gibi Bir Dua",
+    tag: "Koruma",
+    arabic: "",
+    latin: "",
+    meaning: "Allah'ım! Beni ve sevdiklerimi; bilinip bilinmeyen, görülüp görülmeyen, gönle düşüp içe dert olan her türlü kötülükten, kendimden bile sakladığım korkularımdan, ansızın gelen musibetlerden, yarına dair kaygılardan, sonsuz karanlık gibi çöken umutsuzluktan ve fark etmeden sürüklendiğim günahlardan... Kazadan, beladan, nazardan, büyüden, iftiradan, hasetten... Kem bakıştan, kem sözden, kem kalpten... Gizli tuzaklardan, açık düşmanlıklardan, helak olmaktan, dünya ve ahiret zararından, korktuğum ve bilmediğim her şeyden beni uzak eyle... Sana sığındım Rabbim. Koru bizi Ya Hafîz, dualarımızı kabul eyle.",
+    note: ""
+  },
+  {
+    title: "Kalp Huzuru Duası",
+    tag: "Huzur",
+    arabic: "",
+    latin: "",
+    meaning: "Ya Rabbi... Sana sığınmaktan başka bir kapım yok. Kalbim bazen yorgun, bazen suskun, bazen kırık... Ama biliyorum, her kırık kalbi onaran Sensin. Beni, içine hüzün dolan düşüncelerimden arındır. Geçmişin yükünü, geleceğin korkusunu, bugünün kederini kalbimden al. Rabbim, hayat yolumu rahmetinle aydınlat. Zor günlerimi kolaylaştır, güzel olanı nasip ettir. Ya Rabb, kalbime öyle bir huzur ver ki fırtınalar kopsa da içimde sükûnet bulayım. Sabır ver, şükür ver, umut ver ki asla vazgeçmeyeyim. Kalbimi imanla sabitle, ömür yolumu nurunla aydınlat, sevdiklerimi koru, bana da hayırlı kapılarını aç...",
+    note: ""
+  },
+  {
+    title: "İstikrar ve Kulluk Duası",
+    tag: "Genel",
+    arabic: "",
+    latin: "",
+    meaning: "Allah'ım! Senden her işte istikrar ve doğru yolda kararlılık ihsan etmeni diliyorum. Nimetine şükretmeyi ve Sana güzelce kulluk etmeyi nasip eylemeni diliyorum. Senden temiz ve huzurlu bir kalp ve doğru sözlü bir dil lütfetmeni niyaz ediyorum. Bildiğin bütün hayırlardan ihsan eylemeni ve bildiğin bütün şerlerden Sana sığınmayı diliyorum. Bütün kusurlarım için bağışlanma diliyorum. Şüphesiz gaybı en iyi bilen Sensin.",
+    note: "Ahmed b. Hanbel, Müsned, 17114"
+  },
+  {
+    title: "Şükür Duası",
+    tag: "Şükür",
+    arabic: "",
+    latin: "",
+    meaning: "Allah'ım! Bana verdiğin sağlık, rızık, iman ve nimetlerin için Sana sonsuz şükür olsun. Kalbimi daima şükredenlerden eyle. Nimetlerini artır, bizleri sana layık kullarından eyle. Âmin.",
+    note: ""
+  },
+  {
+    title: "Duaların Sırrı",
+    tag: "Huzur",
+    arabic: "",
+    latin: "Ya Rabbi, Ya Rabbi, Ya Rabbi, Ya Bedi'as-semâvati velerdi, Ya Zel-Celâli vel-ikrâm ve ilâhukum ilâhuvvahid. La ilahe illa Huver Rahmânu Rahim. Elif Lâm Mîm. Sübhaneke innî küntü minezzâlimin. Allâhu La ilahe illa Huvel Hayyul Kayyûm. Allâhümme bismikel-a'zam ve ridvânikel ekber. Lâ ilâhe illâ ente.",
+    meaning: "Kalpten okunduğunda yer ve gök şahidiniz olur. Bu dua, duaların sırrıdır. Öyle bir duadır ki çaresizliği ortasında çare olur. Allah'ın izniyle imkânsızı mümkün kılar.",
+    note: ""
+  },
+  {
+    title: "Gece Yatmadan Zikir",
+    tag: "Gece",
+    arabic: "",
+    latin: "",
+    meaning: "Eline bir tesbih al ve gece yatmadan önce sırasıyla:\n21 kez: \"Ya baki, entel baki\"\n9 kez: \"Hasbünallahu ve ni'mel vekil\"\n21 kez: \"İyyake na'budu ve iyyake nesta'in\"\n9 kez: \"Subhanallah, Elhamdülillah, Allahu Ekber\"\n99 kez: \"Lailaheillallah\"\n3 kez: \"Allahümme salli ala seyyidina Muhammed\"",
+    note: ""
+  },
+  {
+    title: "Esma ile İşleri Yoluna Koymak",
+    tag: "Kolaylık",
+    arabic: "",
+    latin: "Subhanallahi ve bihamdihi, subhanallahil azim ve bihamdihi estağfirullah. Ya Kafi, Ya Gani, Ya Fettah, Ya Rezzak, Ya Kerim, Ya Vehhab, Ya Mecid.",
+    meaning: "Sağ elini kalbinin üzerine koy ve bu zikirleri oku. Kısa sürede işlerin yoluna girecek, hayatındaki değişiklikleri fark edeceksin.",
+    note: "Bu isimleri içtenlikle ve düzenli okumak tavsiye edilir."
+  },
+  {
+    title: "Zilzal Duası — Hayır Duası",
+    tag: "Genel",
+    arabic: "",
+    latin: "Allahümme innî es'elüke min hayri mâ se'eleke minhü nebiyyüke Muhammedün sallallahu aleyhi ve sellem.",
+    meaning: "Allah'ım! Senden, Nebin Muhammed (s.a.v.)'in Senden istediği her hayırdan istiyorum.",
+    note: ""
+  }
+];
+
+let activeDuaCategory = 'Tümü';
+
+function buildDuaCategories(){
+  const cats = ['Tümü', ...new Set(DUALAR.map(d=>d.tag))];
+  const wrap = document.getElementById('duaCatWrap');
+  if(!wrap) return;
+  wrap.innerHTML = cats.map(c=>`
+    <div class="cat-pill${c===activeDuaCategory?' active':''}" onclick="setDuaCategory('${c}')">${c}</div>
+  `).join('');
+}
+
+function setDuaCategory(cat){
+  activeDuaCategory = cat;
+  buildDuaCategories();
+  filterDualar();
+}
+
+function filterDualar(){
+  const q = (document.getElementById('duaSearch')?.value||'').trim().toLowerCase();
+  let list = DUALAR;
+  if(activeDuaCategory !== 'Tümü') list = list.filter(d=>d.tag===activeDuaCategory);
+  if(q) list = list.filter(d=>
+    d.title.toLowerCase().includes(q) ||
+    d.meaning.toLowerCase().includes(q) ||
+    d.latin.toLowerCase().includes(q) ||
+    d.tag.toLowerCase().includes(q)
+  );
+  renderDualar(list);
+}
+
+function renderDualar(list){
+  const container = document.getElementById('duaList');
+  if(!list.length){
+    container.innerHTML='<div class="no-result">Sonuç bulunamadı</div>';
+    return;
+  }
+  container.innerHTML = list.map((d,i)=>`
+    <div class="dua-card" onclick="toggleDua(this)">
+      <div class="dua-card-header">
+        <div class="dua-title">${d.title}</div>
+        <span class="dua-tag">${d.tag}</span>
+        <svg class="dua-chevron" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 5.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="dua-body">
+        ${d.arabic ? `<div class="dua-arabic">${d.arabic}</div>` : ''}
+        ${d.latin ? `<div class="dua-latin">${d.latin.replace(/\n/g,'<br>')}</div>` : ''}
+        <div class="dua-meaning">${d.meaning.replace(/\n/g,'<br>')}</div>
+        ${d.note ? `<div class="dua-note">${d.note}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleDua(el){
+  el.classList.toggle('open');
+}
+
+function buildDuaList(){
+  buildDuaCategories();
+  filterDualar();
+}
+
+// ── end Önemli Dualar ──────────────────────────────────────
+
+// init
+setHeaderDate();
+document.getElementById('prayerSectionLabel').textContent = 'İstanbul Namaz Vakitleri';
+document.getElementById('weatherSectionLabel').textContent = 'İstanbul Hava Durumu';
+loadPrayerTimes();
+loadRandomAyet(false);
+loadWeather();
+buildDuaList();
+</script>
+</body>
+</html>
