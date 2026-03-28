@@ -665,176 +665,52 @@ function refreshSurahList(){
 
 // ── Önemli Dualar ─────────────────────────────────────────
 const DUALAR = [
-  {
-    title: "Kısa ve Câmi Dua",
-    tag: "Genel",
-    arabic: "اللَّهُمَّ اغْفِرْ لِي وَارْحَمْنِي وَعَافِنِي وَارْزُقْنِي",
-    latin: "Allahümme'ğfir lî, verhamnî, ve âfinî, verzuknî.",
-    meaning: "Allah'ım! Beni bağışla, bana merhamet et, bana afiyet ver ve beni rızıklandır.",
-    note: "Bu dört kelime; af, merhamet, sağlık ve rızık dileğini bir arada taşır."
-  },
-  {
-    title: "Sabah Namazı Sonrası Dua",
-    tag: "Sabah",
-    arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا وَرِزْقًا طَيِّبًا وَعَمَلًا مُتَقَبَّلًا",
-    latin: "Allahümme innî es'elüke ilmen nâfi'an ve rızkan tayyiben ve amelen mütekabbela.",
-    meaning: "Ey Allah'ım, Senden şunları istiyorum: faydalı ilim, temiz ve güzel rızık ve kabul edilen ameller.",
-    note: "Peygamberimiz (s.a.v.) sabah namazından sonra bu duayı okurdu. (İbn Mace)"
-  },
-  {
-    title: "Güç ve Hidayet Duası",
-    tag: "Yardım",
-    arabic: "",
-    latin: "Allahümme innî ateberraü min havlî ve kuvvetî ve elteciü ilâ havlike ve kuvvetik. Allahümme e'innî velâ tü'in 'aleyye, vensurnî velâ tansur 'aleyye, vehdinî ve yessiril-hüdâ lî.",
-    meaning: "Allah'ım! Kendi güç ve kuvvetimden vazgeçiyor, Senin sınırsız güç ve kuvvetine sığınıyorum. Bana yardım et, aleyhime olanlara yardım etme. Beni muzaffer kıl, mağlup ettirme. Beni doğru yola ilet ve hidayeti benim için kolaylaştır.",
-    note: ""
-  },
-  {
-    title: "Ferahlık Duası (Rabbişrah)",
-    tag: "Kolaylık",
-    arabic: "رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي يَفْقَهُوا قَوْلِي",
-    latin: "Rabbişrah lî sadrî. Ve yessir lî emrî. Vahlul ukdeten min lisânî. Yefkahû kavlî.",
-    meaning: "Rabbim! Gönlüme ferahlık ver. İşimi bana kolaylaştır. Dilimdeki tutukluğu çöz. Ki sözümü anlasınlar.",
-    note: "Taha Suresi 25-28. ayetler — Hz. Musa'nın duası."
-  },
-  {
-    title: "İşlerin Rast Gitmesi İçin Dua",
-    tag: "Kolaylık",
-    arabic: "",
-    latin: "Yâ Hayyü, yâ Kayyûm! Bi rahmetike esteğîsü fe eslıh lî şe'nî küllehü ve lâ tekilnî ilâ nefsî Terfete aynin.",
-    meaning: "Ey Hayy ve Kayyum olan Allah'ım! Ancak senin rahmetine sığınırım. Benim bütün işlerimi düzelt ve beni göz açıp kapayıncaya kadar da asla nefsime bırakma.",
-    note: "Bismillahirrahmanirrahim ile başlanarak okunur. İşlerin rast gitmesi için sürekli okunması tavsiye edilir."
-  },
-  {
-    title: "Rızık Duası (Hz. Musa)",
-    tag: "Rızık",
-    arabic: "رَبِّ إِنِّي لِمَا أَنْزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ",
-    latin: "Rabbi innî limâ enzelte ileyye min hayrin fakîr.",
-    meaning: "Rabbim! Bana göndereceğin her hayra muhtacım.",
-    note: "Kasas Suresi 24. ayet. Hz. Musa'nın Medyen'de söylediği bu dua, rızık ve yardım için en güçlü dualardan biridir."
-  },
-  {
-    title: "Bereket ve Rızık Duası",
-    tag: "Rızık",
-    arabic: "",
-    latin: "Yâ Rahmân, Yâ Rahîm, Yâ Fettâh, Yâ Vehhâb. İftah lî kalbî verzuknî bilâ teab.",
-    meaning: "Ey Rahman, ey Rahim, ey Fettah, ey Vehhab! Kalbimi aç ve beni yorgunluk çektirmeksizin rızıklandır.",
-    note: "Sıkıntı ve darlık anlarında, rızık için okunur."
-  },
-  {
-    title: "Zayıflık ve Rızık Duası (Duha)",
-    tag: "Rızık",
-    arabic: "",
-    latin: "Allahümme innî daifun fekavvi fî ridâke da'fî ve huz ilelhayri binasiyetî vec'alil islame münteha ridaye. Allahümme innî daifün fekavvinî ve innî zelilün feizzeni ve innî fakirün ferzuknî.",
-    meaning: "Allah'ım! Ben zayıfım, rızanı kazanma yolunda zayıflığımı güce çevir. Beni hayra yönelt, İslam'ı rızamın nihai hedefi kıl. Allah'ım! Ben zayıfım beni güçlendir, ben zelilim beni aziz kıl, ben fakirim beni rızıklandır.",
-    note: "Duha Suresi ile birlikte okunması tavsiye edilir."
-  },
-  {
-    title: "İlim ve Fehim Duası",
-    tag: "İlim",
-    arabic: "رَبِّ زِدْنِي عِلْمًا وَفَهْمًا وَأَلْحِقْنِي فِي زُمْرَةِ الصَّالِحِينَ",
-    latin: "Rabbi zidnî ilmen ve fehmen ve elhiknî fî zumreti's-sâlihîn.",
-    meaning: "Rabbim! İlmimi ve fehmimi artır, beni salih kulların arasına kat.",
-    note: "Peygamber Efendimiz (s.a.v.) bu dua ile ilminin artmasını niyaz ederdi."
-  },
-  {
-    title: "İsra Suresi 80. Ayet Duası",
-    tag: "Kolaylık",
-    arabic: "وَقُلْ رَبِّ أَدْخِلْنِي مُدْخَلَ صِدْقٍ وَأَخْرِجْنِي مُخْرَجَ صِدْقٍ وَاجْعَلْ لِي مِنْ لَدُنْكَ سُلْطَانًا نَصِيرًا",
-    latin: "Vekul rabbi edhilnî mudhale sidkin veahricnî muhrace sidkin vec'al lî min ledunke sultânen nasîrâ.",
-    meaning: "Rabbim! Gireceğim yere dürüstlükle girmemi, çıkacağım yerden dürüstlükle çıkmamı nasip eyle; yüce katından bana yardımcı bir güç ver.",
-    note: "İsra Suresi 80. ayet. Yeni bir işe, yolculuğa veya önemli bir adıma başlarken okunur."
-  },
-  {
-    title: "Al-i İmran 26. Ayet — Mülk Duası",
-    tag: "Genel",
-    arabic: "قُلِ اللَّهُمَّ مَالِكَ الْمُلْكِ تُؤْتِي الْمُلْكَ مَنْ تَشَاءُ وَتَنْزِعُ الْمُلْكَ مِمَّنْ تَشَاءُ وَتُعِزُّ مَنْ تَشَاءُ وَتُذِلُّ مَنْ تَشَاءُ بِيَدِكَ الْخَيْرُ إِنَّكَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
-    latin: "Kuli(A)llâhumme mâlikel mulki tu/tî-l mulke men teşâu vetenzi'u-l mulke mimmen teşâu vetu'izzu men teşâu vetužillu men teşâ(u)(s) biyedike-l hayr(u)(s) inneke 'alâ kulli şey-in kadîr(un).",
-    meaning: "De ki: Ey mülkün gerçek sahibi olan Allah! Sen dilediğine mülkü verirsin, dilediğinden mülkü çekip alırsın; dilediğini yüceltip aziz kılar, dilediğini alçaltıp zelil edersin. Bütün hayırlar yalnız senin elindedir. Şüphesiz sen, her şeye kâdirsin.",
-    note: "Al-i İmran Suresi 26. ayet."
-  },
-  {
-    title: "Fetih Duası",
-    tag: "Genel",
-    arabic: "إِنَّا فَتَحْنَا لَكَ فَتْحًا مُبِينًا",
-    latin: "İnna fetehna leke fethen mübina.",
-    meaning: "Şüphesiz biz sana apaçık bir fetih ihsan ettik.",
-    note: "Fetih Suresi 1. ayet. 11 kez okunarak Allah'tan başarı ve kolaylık niyaz edilir: 'Allah'ım sen başarmak istediklerimi başarmayı nasip eyle.'"
-  },
-  {
-    title: "Hızır Aleyhisselam Duası",
-    tag: "Koruma",
-    arabic: "بِسْمِ اللهِ مَا شَاءَ اللهُ لَا قُوَّةَ إِلَّا بِاللهِ مَا شَاءَ اللهُ كُلُّ نِعْمَةٍ مِنَ اللهِ مَا شَاءَ اللهُ الْخَيْرُ كُلُّهُ بِيَدِ اللهِ مَا شَاءَ اللهُ لَا يَصْرِفُ السُّوءَ إِلَّا اللهُ",
-    latin: "Bismillah maşaallah la kuvvete illa billah, maşaallah kulli nimetin minallah, maşaallah elhayrü küllihi biyedillahi, maşaallah la yusrifüsuue illallah.",
-    meaning: "Allah'ın adıyla, Allah'ın dilediği olur, güç ancak Allah'tandır. Her nimet Allah'tandır. Bütün hayır Allah'ın elindedir. Kötülüğü ancak Allah uzaklaştırır.",
-    note: "Hızır Aleyhisselam'ın kişiyi, evini ve malını koruma altına alan duası. Sabah akşam okunur."
-  },
-  {
-    title: "Ruhuna Zırh Gibi Bir Dua",
-    tag: "Koruma",
-    arabic: "",
-    latin: "",
-    meaning: "Allah'ım! Beni ve sevdiklerimi; bilinip bilinmeyen, görülüp görülmeyen, gönle düşüp içe dert olan her türlü kötülükten, kendimden bile sakladığım korkularımdan, ansızın gelen musibetlerden, yarına dair kaygılardan, sonsuz karanlık gibi çöken umutsuzluktan ve fark etmeden sürüklendiğim günahlardan... Kazadan, beladan, nazardan, büyüden, iftiradan, hasetten... Kem bakıştan, kem sözden, kem kalpten... Gizli tuzaklardan, açık düşmanlıklardan, helak olmaktan, dünya ve ahiret zararından, korktuğum ve bilmediğim her şeyden beni uzak eyle... Sana sığındım Rabbim. Koru bizi Ya Hafîz, dualarımızı kabul eyle.",
-    note: ""
-  },
-  {
-    title: "Kalp Huzuru Duası",
-    tag: "Huzur",
-    arabic: "",
-    latin: "",
-    meaning: "Ya Rabbi... Sana sığınmaktan başka bir kapım yok. Kalbim bazen yorgun, bazen suskun, bazen kırık... Ama biliyorum, her kırık kalbi onaran Sensin. Beni, içine hüzün dolan düşüncelerimden arındır. Geçmişin yükünü, geleceğin korkusunu, bugünün kederini kalbimden al. Rabbim, hayat yolumu rahmetinle aydınlat. Zor günlerimi kolaylaştır, güzel olanı nasip ettir. Ya Rabb, kalbime öyle bir huzur ver ki fırtınalar kopsa da içimde sükûnet bulayım. Sabır ver, şükür ver, umut ver ki asla vazgeçmeyeyim. Kalbimi imanla sabitle, ömür yolumu nurunla aydınlat, sevdiklerimi koru, bana da hayırlı kapılarını aç...",
-    note: ""
-  },
-  {
-    title: "İstikrar ve Kulluk Duası",
-    tag: "Genel",
-    arabic: "",
-    latin: "",
-    meaning: "Allah'ım! Senden her işte istikrar ve doğru yolda kararlılık ihsan etmeni diliyorum. Nimetine şükretmeyi ve Sana güzelce kulluk etmeyi nasip eylemeni diliyorum. Senden temiz ve huzurlu bir kalp ve doğru sözlü bir dil lütfetmeni niyaz ediyorum. Bildiğin bütün hayırlardan ihsan eylemeni ve bildiğin bütün şerlerden Sana sığınmayı diliyorum. Bütün kusurlarım için bağışlanma diliyorum. Şüphesiz gaybı en iyi bilen Sensin.",
-    note: "Ahmed b. Hanbel, Müsned, 17114"
-  },
-  {
-    title: "Şükür Duası",
-    tag: "Şükür",
-    arabic: "",
-    latin: "",
-    meaning: "Allah'ım! Bana verdiğin sağlık, rızık, iman ve nimetlerin için Sana sonsuz şükür olsun. Kalbimi daima şükredenlerden eyle. Nimetlerini artır, bizleri sana layık kullarından eyle. Âmin.",
-    note: ""
-  },
-  {
-    title: "Duaların Sırrı",
-    tag: "Huzur",
-    arabic: "",
-    latin: "Ya Rabbi, Ya Rabbi, Ya Rabbi, Ya Bedi'as-semâvati velerdi, Ya Zel-Celâli vel-ikrâm ve ilâhukum ilâhuvvahid. La ilahe illa Huver Rahmânu Rahim. Elif Lâm Mîm. Sübhaneke innî küntü minezzâlimin. Allâhu La ilahe illa Huvel Hayyul Kayyûm. Allâhümme bismikel-a'zam ve ridvânikel ekber. Lâ ilâhe illâ ente.",
-    meaning: "Kalpten okunduğunda yer ve gök şahidiniz olur. Bu dua, duaların sırrıdır. Öyle bir duadır ki çaresizliği ortasında çare olur. Allah'ın izniyle imkânsızı mümkün kılar.",
-    note: ""
-  },
-  {
-    title: "Gece Yatmadan Zikir",
-    tag: "Gece",
-    arabic: "",
-    latin: "",
-    meaning: "Eline bir tesbih al ve gece yatmadan önce sırasıyla:\n21 kez: \"Ya baki, entel baki\"\n9 kez: \"Hasbünallahu ve ni'mel vekil\"\n21 kez: \"İyyake na'budu ve iyyake nesta'in\"\n9 kez: \"Subhanallah, Elhamdülillah, Allahu Ekber\"\n99 kez: \"Lailaheillallah\"\n3 kez: \"Allahümme salli ala seyyidina Muhammed\"",
-    note: ""
-  },
-  {
-    title: "Esma ile İşleri Yoluna Koymak",
-    tag: "Kolaylık",
-    arabic: "",
-    latin: "Subhanallahi ve bihamdihi, subhanallahil azim ve bihamdihi estağfirullah. Ya Kafi, Ya Gani, Ya Fettah, Ya Rezzak, Ya Kerim, Ya Vehhab, Ya Mecid.",
-    meaning: "Sağ elini kalbinin üzerine koy ve bu zikirleri oku. Kısa sürede işlerin yoluna girecek, hayatındaki değişiklikleri fark edeceksin.",
-    note: "Bu isimleri içtenlikle ve düzenli okumak tavsiye edilir."
-  },
-  {
-    title: "Zilzal Duası — Hayır Duası",
-    tag: "Genel",
-    arabic: "",
-    latin: "Allahümme innî es'elüke min hayri mâ se'eleke minhü nebiyyüke Muhammedün sallallahu aleyhi ve sellem.",
-    meaning: "Allah'ım! Senden, Nebin Muhammed (s.a.v.)'in Senden istediği her hayırdan istiyorum.",
-    note: ""
-  }
-];
-
+  {title:"Al-i İmran 26 — Mülk Duası",tag:"Ayet",arabic:"قُلِ اللَّهُمَّ مَالِكَ الْمُلْكِ تُؤْتِي الْمُلْكَ مَنْ تَشَاءُ وَتَنْزِعُ الْمُلْكَ مِمَّنْ تَشَاءُ وَتُعِزُّ مَنْ تَشَاءُ وَتُذِلُّ مَنْ تَشَاءُ بِيَدِكَ الْخَيْرُ إِنَّكَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",latin:"Allahümme mâlikel mülki tü'til mülke men teşâü ve tenziul mülke mimmen teşâ, ve tüizzü men teşâü ve tüzillü men teşâ, biyedikel hayr, inneke alâ külli şey'in kadîr.",meaning:"Allah'ım! Mülkün gerçek sahibi Sensin. Dilediğine mülkü verirsin, dilediğinden mülkü çekip alırsın. Dilediğini üstün kılar, dilediğini zelil edersin. Hayır Senin elindedir. Şüphesiz Sen her şeye kâdirsin.",note:"Al-i İmran Suresi 26. ayet. Rızık ve bereket için sabah akşam okunur."},
+  {title:"Allahümme İnnî Eûzü — Borçtan Kurtulma Duası",tag:"Sıkıntı",arabic:"اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ وَأَعُوذُ بِكَ مِنَ الْعَجْزِ وَالْكَسَلِ وَأَعُوذُ بِكَ مِنَ الْجُبْنِ وَالْبُخْلِ وَأَعُوذُ بِكَ مِنْ غَلَبَةِ الدَّيْنِ وَقَهْرِ الرِّجَالِ",latin:"Allâhümme innî eûzü bike minel hemmi vel hazen, ve eûzü bike minel aczi vel kesel, ve eûzü bike minel cübni vel buhl, ve eûzü bike min ğalebetid deyni ve kahrir ricâl.",meaning:"Allah'ım! Kederden ve üzüntüden Sana sığınırım. Acizlikten ve tembellikten Sana sığınırım. Korkaklıktan ve cimrilikten Sana sığınırım. Borç altında ezilmekten ve insanların baskısına uğramaktan Sana sığınırım.",note:"Peygamberimiz (s.a.v.) bu duayı sabah akşam okurdu. Borç, sıkıntı ve kaygıdan kurtulmak için okunur. (Buhârî)"},
+  {title:"Allahümmekfinî Bihalâlike — Helal Rızık Duası",tag:"Rızık",arabic:"اللَّهُمَّ اكْفِنِي بِحَلَالِكَ عَنْ حَرَامِكَ وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ",latin:"Allâhümmekfinî bihalâlike an harâmike ve ağnî bifadlike ammen sivâk.",meaning:"Allah'ım! Helal kıldıklarını bana kâfi kılarak haramından uzak tut; fazlınla beni Senden başkasına muhtaç etme.",note:"Hz. Ali'den rivayet edilen bu dua, helal rızık ve başkasına muhtaç olmamak için okunur. (Tirmizî)"},
+  {title:"Ankebut 60 — Rızık Allah'tan",tag:"Ayet",arabic:"وَكَأَيِّنْ مِنْ دَابَّةٍ لَا تَحْمِلُ رِزْقَهَا اللَّهُ يَرْزُقُهَا وَإِيَّاكُمْ وَهُوَ السَّمِيعُ الْعَلِيمُ",latin:"Vekeeyyin min dâbbetin lâ tahmilu rizkahâ, Allâhu yerzukuhâ ve iyyâkum, ve hüves semî'ul alîm.",meaning:"Nice canlılar var ki rızıklarını yanlarında taşıyamazlar. Onların da sizin de rızıklandıranınız Allah'tır. O her şeyi işitir ve bilir.",note:"Ankebut Suresi 60. ayet. Rızık konusunda Allah'a tevekkül için okunur."},
+  {title:"Bereket ve Rızık Duası",tag:"Rızık",arabic:"",latin:"Yâ Rahmân, Yâ Rahîm, Yâ Fettâh, Yâ Vehhâb. İftah lî kalbî verzuknî bilâ teab.",meaning:"Ey Rahman, ey Rahim, ey Fettah, ey Vehhab! Kalbimi aç ve beni yorgunluk çektirmeksizin rızıklandır.",note:"Sıkıntı ve darlık anlarında rızık için okunur."},
+  {title:"Borçtan Kurtulma Duası (Tam)",tag:"Sıkıntı",arabic:"",latin:"Allâhümme mâlikel mülki tü'til mülke men teşâü ve tenziul mülke mimmen teşâ, ve tüizzü men teşâü ve tüzillü men teşâ, biyedikel hayr, inneke alâ külli şey'in kadîr. Rahmâned dünyâ vel âhirati tu'tîhâ men teşâü ve temneuhâ men teşâü. İrhamnî rahmeten tuğnînî bihâ an rahmeti men sivâk.",meaning:"Allah'ım! Mülkün gerçek sahibi Sensin. Ey dünya ve ahiretin Rahman'ı! Dilediğine verirsin, dilediğinden menedersin. Beni, Senden başkasının acımasından müstağni kılacak bir rahmet ile bana rahmet eyle.",note:"Borç ve sıkıntıdan kurtulmak için sabah akşam okunur."},
+  {title:"Duaların Sırrı",tag:"Huzur",arabic:"",latin:"Ya Rabbi, Ya Rabbi, Ya Rabbi, Ya Bedi'as-semâvati velerdi, Ya Zel-Celâli vel-ikrâm ve ilâhukum ilâhuvvahid. La ilahe illa Huver Rahmânu Rahim. Elif Lâm Mîm. Sübhaneke innî küntü minezzâlimin. Allâhu La ilahe illa Huvel Hayyul Kayyûm. Allâhümme bismikel-a'zam ve ridvânikel ekber. Lâ ilâhe illâ ente.",meaning:"Kalpten okunduğunda yer ve gök şahidiniz olur. Bu dua, duaların sırrıdır. Öyle bir duadır ki çaresizliği ortasında çare olur. Allah'ın izniyle imkânsızı mümkün kılar.",note:""},
+  {title:"Esma ile İşleri Yoluna Koymak",tag:"Kolaylık",arabic:"",latin:"Subhanallahi ve bihamdihi, subhanallahil azim ve bihamdihi estağfirullah. Ya Kafi, Ya Gani, Ya Fettah, Ya Rezzak, Ya Kerim, Ya Vehhab, Ya Mecid.",meaning:"Sağ elini kalbinin üzerine koy ve bu zikirleri oku. Bu isimleri içtenlikle ve düzenli okumak tavsiye edilir.",note:""},
+  {title:"Fatır 2 — Rahmet Kapısı",tag:"Ayet",arabic:"مَا يَفْتَحِ اللَّهُ لِلنَّاسِ مِنْ رَحْمَةٍ فَلَا مُمْسِكَ لَهَا وَمَا يُمْسِكْ فَلَا مُرْسِلَ لَهُ مِنْ بَعْدِهِ وَهُوَ الْعَزِيزُ الْحَكِيمُ",latin:"Mâ yeftehillâhu linnâsi min rahmetin felâ mumsike lehâ, vemâ yumsik felâ mursile lehû min ba'dih, ve hüvel azîzül hakîm.",meaning:"Eğer Allah insanlar için bir rahmet kapısı açarsa, o rahmetin onlara ulaşmasını engelleyebilecek kimse yoktur. Aynı şekilde, rahmetinin kapısını kaparsa, O'ndan başka bu nimeti salıp gönderebilecek kimse yoktur. O, kudreti dâimâ üstün gelen, her hükmü hikmetli ve sağlam olandır.",note:"Fatır Suresi 2. ayet. Sıkıntıda rahmet ve çıkış yolu ararken okunur."},
+  {title:"Ferahlık Duası (Rabbişrah)",tag:"Kolaylık",arabic:"رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي يَفْقَهُوا قَوْلِي",latin:"Rabbişrah lî sadrî. Ve yessir lî emrî. Vahlul ukdeten min lisânî. Yefkahû kavlî.",meaning:"Rabbim! Gönlüme ferahlık ver. İşimi bana kolaylaştır. Dilimdeki tutukluğu çöz. Ki sözümü anlasınlar.",note:"Taha Suresi 25-28. ayetler — Hz. Musa'nın duası."},
+  {title:"Fetih Duası",tag:"Kolaylık",arabic:"إِنَّا فَتَحْنَا لَكَ فَتْحًا مُبِينًا",latin:"İnna fetehna leke fethen mübina.",meaning:"Şüphesiz biz sana apaçık bir fetih ihsan ettik.",note:"Fetih Suresi 1. ayet. 11 kez okunarak başarı ve kolaylık niyaz edilir."},
+  {title:"Gece Yatmadan Zikir",tag:"Gece",arabic:"",latin:"",meaning:"Eline bir tesbih al ve gece yatmadan önce sırasıyla:\n21 kez: \"Ya baki, entel baki\"\n9 kez: \"Hasbünallahu ve ni'mel vekil\"\n21 kez: \"İyyake na'budu ve iyyake nesta'in\"\n9 kez: \"Subhanallah, Elhamdülillah, Allahu Ekber\"\n99 kez: \"Lailaheillallah\"\n3 kez: \"Allahümme salli ala seyyidina Muhammed\"",note:""},
+  {title:"Güç ve Hidayet Duası",tag:"Yardım",arabic:"",latin:"Allahümme innî ateberraü min havlî ve kuvvetî ve elteciü ilâ havlike ve kuvvetik. Allahümme e'innî velâ tü'in 'aleyye, vensurnî velâ tansur 'aleyye, vehdinî ve yessiril-hüdâ lî.",meaning:"Allah'ım! Kendi güç ve kuvvetimden vazgeçiyor, Senin sınırsız güç ve kuvvetine sığınıyorum. Bana yardım et, aleyhime olanlara yardım etme. Beni muzaffer kıl, mağlup ettirme. Beni doğru yola ilet ve hidayeti benim için kolaylaştır.",note:""},
+  {title:"Güzel Ahlak Duası",tag:"Genel",arabic:"اللَّهُمَّ أَعْطِنِي حُسْنَ الْخُلُقِ",latin:"Allahümme a'tinî hüsne'l-hulûk.",meaning:"Allah'ım! Bana güzel ahlak nasip et.",note:"Peygamberimiz (s.a.v.)'in dilinden düşürmediği 5 duadan biri. (Müslim)"},
+  {title:"Hasbiyallah Zikri",tag:"Tevekkül",arabic:"حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ",latin:"Hasbiyallahu lâ ilâhe illâ hüve.",meaning:"Allah bana yeter. O'ndan başka ilah yoktur.",note:"Peygamberimiz (s.a.v.)'in dilinden düşürmediği 5 duadan biri. Çok sıkıntılı, çaresiz kalınan durumlarda çokça okunurdu. (Tevbe Suresi 129. ayet)"},
+  {title:"Hud 6 — Rızık Allah'a Aittir",tag:"Ayet",arabic:"وَمَا مِنْ دَابَّةٍ فِي الْأَرْضِ إِلَّا عَلَى اللَّهِ رِزْقُهَا وَيَعْلَمُ مُسْتَقَرَّهَا وَمُسْتَوْدَعَهَا كُلٌّ فِي كِتَابٍ مُبِينٍ",latin:"Vemâ min dâbbetin fi-l-ardi illâ alallâhi rizkuhâ, veya'lemu mustekarrahâ vemüstevde'ahâ, küllün fî kitâbin mübîn.",meaning:"Yeryüzünde kımıldayan bütün canlıların rızkı yalnızca Allah'a aittir. Allah, her canlının durduğu yeri ve sonunda bırakılacağı mekânı bilir. Bunların hepsi apaçık bir kitapta kayıtlıdır.",note:"Hud Suresi 6. ayet. Rızık konusunda Allah'a güven ve tevekkül için okunur."},
+  {title:"Hud 56 — Tevekkül Ayeti",tag:"Ayet",arabic:"إِنِّي تَوَكَّلْتُ عَلَى اللَّهِ رَبِّي وَرَبِّكُمْ مَا مِنْ دَابَّةٍ إِلَّا هُوَ آخِذٌ بِنَاصِيَتِهَا إِنَّ رَبِّي عَلَى صِرَاطٍ مُسْتَقِيمٍ",latin:"İnnî tevekkeltu alallâhi rabbî ve rabbikum, mâ min dâbbetin illâ hüve âhizun binâsiyetihâ, inne rabbî alâ sirâtin müstekîm.",meaning:"Şüphesiz ben, benim de Rabbim sizin de Rabbiniz olan Allah'a güvenip dayandım. Yeryüzünde hareket eden hiçbir canlı yoktur ki Allah onun perçeminden tutmuş olmasın. Muhakkak ki Rabbimin tuttuğu yol, dosdoğru ve mutlak adil bir yoldur.",note:"Hud Suresi 56. ayet. Hz. Hud'un kavmine söylediği tevekkül beyanı."},
+  {title:"Hızır Aleyhisselam Duası",tag:"Koruma",arabic:"بِسْمِ اللهِ مَا شَاءَ اللهُ لَا قُوَّةَ إِلَّا بِاللهِ مَا شَاءَ اللهُ كُلُّ نِعْمَةٍ مِنَ اللهِ مَا شَاءَ اللهُ الْخَيْرُ كُلُّهُ بِيَدِ اللهِ مَا شَاءَ اللهُ لَا يَصْرِفُ السُّوءَ إِلَّا اللهُ",latin:"Bismillah maşaallah lâ kuvvete illâ billah, maşaallah kulli nimetin minallah, maşaallah elhayrü küllihi biyedillah, maşaallah lâ yusrifüssûe illallah.",meaning:"Allah'ın adıyla, Allah'ın dilediği olur, güç ancak Allah'tandır. Her nimet Allah'tandır. Bütün hayır Allah'ın elindedir. Kötülüğü ancak Allah uzaklaştırır.",note:"Kişiyi, evini ve malını koruma altına alan dua. Sabah akşam okunur."},
+  {title:"Hz. Adem'in Tövbesi",tag:"Tövbe",arabic:"رَبَّنَا ظَلَمْنَا أَنْفُسَنَا وَإِنْ لَمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ",latin:"Rabbenâ zalemnâ enfüsenâ ve in lem tağfir lenâ ve terhamnâ lenekûnenne minel hâsirîn.",meaning:"Rabbimiz! Biz kendimize zulmettik. Eğer bizi bağışlamaz ve bize acımazsan mutlaka ziyana uğrayanlardan oluruz.",note:"A'raf Suresi 23. ayet. Hz. Adem ve Havva'nın tövbe duası. Günahlardan pişmanlık ve af dilemek için okunur."},
+  {title:"İlim ve Fehim Duası",tag:"İlim",arabic:"رَبِّ زِدْنِي عِلْمًا وَفَهْمًا وَأَلْحِقْنِي فِي زُمْرَةِ الصَّالِحِينَ",latin:"Rabbi zidnî ilmen ve fehmen ve elhiknî fî zumreti's-sâlihîn.",meaning:"Rabbim! İlmimi ve fehmimi artır, beni salih kulların arasına kat.",note:"Peygamber Efendimiz (s.a.v.) bu dua ile ilminin artmasını niyaz ederdi."},
+  {title:"İsra 80 — Doğruluk Duası",tag:"Kolaylık",arabic:"وَقُلْ رَبِّ أَدْخِلْنِي مُدْخَلَ صِدْقٍ وَأَخْرِجْنِي مُخْرَجَ صِدْقٍ وَاجْعَلْ لِي مِنْ لَدُنْكَ سُلْطَانًا نَصِيرًا",latin:"Ve kul rabbi edhilnî mudhale sidkin ve ahricnî muhrace sidkin vec'al lî min ledünke sultânen nasîrâ.",meaning:"Rabbim! Gireceğim yere dürüstlükle girmemi, çıkacağım yerden dürüstlükle çıkmamı nasip eyle; yüce katından bana yardımcı bir güç ver.",note:"İsra Suresi 80. ayet. Yeni bir işe, yolculuğa veya önemli bir adıma başlarken okunur."},
+  {title:"İstikrar Duası (Ahmed b. Hanbel)",tag:"Genel",arabic:"",latin:"",meaning:"Allah'ım! Senden her işte istikrar ve doğru yolda kararlılık ihsan etmeni diliyorum. Nimetine şükretmeyi ve Sana güzelce kulluk etmeyi nasip eylemeni diliyorum. Senden temiz ve huzurlu bir kalp ve doğru sözlü bir dil lütfetmeni niyaz ediyorum. Bildiğin bütün hayırlardan ihsan eylemeni ve bildiğin bütün şerlerden Sana sığınmayı diliyorum. Bütün kusurlarım için bağışlanma diliyorum. Şüphesiz gaybı en iyi bilen Sensin.",note:"Ahmed b. Hanbel, Müsned, 17114"},
+  {title:"İşlerin Rast Gitmesi İçin Dua",tag:"Kolaylık",arabic:"",latin:"Yâ Hayyü, yâ Kayyûm! Bi rahmetike esteğîsü fe eslıh lî şe'nî küllehü ve lâ tekilnî ilâ nefsî terfete aynin.",meaning:"Ey Hayy ve Kayyum olan Allah'ım! Ancak senin rahmetine sığınırım. Benim bütün işlerimi düzelt ve beni göz açıp kapayıncaya kadar asla nefsime bırakma.",note:"Bismillahirrahmanirrahim ile başlanarak okunur. (Hâkim, Müstedrek)"},
+  {title:"Kalbin Sabit Kalması Duası",tag:"İman",arabic:"يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ",latin:"Ya mukallibel kulûb, sebbid kalbî alâ dînik.",meaning:"Ey kalpleri çeviren Allah'ım! Kalbimi dinin üzere sabit kıl.",note:"Peygamberimiz (s.a.v.)'in dilinden düşürmediği 5 duadan biri. (Tirmizî)"},
+  {title:"Kalp Huzuru Duası",tag:"Huzur",arabic:"",latin:"",meaning:"Ya Rabbi... Sana sığınmaktan başka bir kapım yok. Kalbim bazen yorgun, bazen suskun, bazen kırık... Ama biliyorum, her kırık kalbi onaran Sensin. Beni içine hüzün dolan düşüncelerimden arındır. Geçmişin yükünü, geleceğin korkusunu, bugünün kederini kalbimden al. Rabbim, hayat yolumu rahmetinle aydınlat. Zor günlerimi kolaylaştır, güzel olanı nasip ettir. Ya Rabb, kalbime öyle bir huzur ver ki fırtınalar kopsa da içimde sükûnet bulayım. Sabır ver, şükür ver, umut ver ki asla vazgeçmeyeyim. Kalbimi imanla sabitle, ömür yolumu nurunla aydınlat, sevdiklerimi koru, bana da hayırlı kapılarını aç...",note:""},
+  {title:"Kadir Gecesi Affı Duası",tag:"Tövbe",arabic:"اللَّهُمَّ إِنَّكَ عَفُوٌّ كَرِيمٌ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي",latin:"Allahümme inneke afüvvün kerîmün tühibbü'l-afve fa'fü annî.",meaning:"Allah'ım! Sen affedicisin, affetmeyi seversin, beni affet.",note:"Peygamberimiz (s.a.v.)'in dilinden düşürmediği 5 duadan biri. Kadir gecesi ve her zaman okunur. (Tirmizî)"},
+  {title:"Kısa ve Câmi Dua",tag:"Genel",arabic:"اللَّهُمَّ اغْفِرْ لِي وَارْحَمْنِي وَعَافِنِي وَارْزُقْنِي",latin:"Allahümme'ğfir lî, verhamnî, ve âfinî, verzuknî.",meaning:"Allah'ım! Beni bağışla, bana merhamet et, bana afiyet ver ve beni rızıklandır.",note:"Bu dört kelime; af, merhamet, sağlık ve rızık dileğini bir arada taşır."},
+  {title:"Rabbi Yessir — Kolaylık Duası",tag:"Kolaylık",arabic:"رَبِّ يَسِّرْ وَلَا تُعَسِّرْ رَبِّ تَمِّمْ بِالْخَيْرِ",latin:"Rabbi yessir velâ tu'assir, rabbi temmim bilhayr.",meaning:"Rabbim! İşimi kolaylaştır, zorlaştırma. Hayırla tamamla.",note:"Peygamberimiz (s.a.v.)'in dilinden düşürmediği 5 duadan biri. Tüm zorluklar için ve yeni bir işe başlarken okunur."},
+  {title:"Rızık Duası (Hz. Musa)",tag:"Rızık",arabic:"رَبِّ إِنِّي لِمَا أَنْزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ",latin:"Rabbi innî limâ enzelte ileyye min hayrin fakîr.",meaning:"Rabbim! Bana göndereceğin her hayra muhtacım.",note:"Kasas Suresi 24. ayet. Hz. Musa'nın Medyen'de söylediği bu dua, rızık ve yardım için en güçlü dualardan biridir."},
+  {title:"Ruhuna Zırh Gibi Bir Dua",tag:"Koruma",arabic:"",latin:"",meaning:"Allah'ım! Beni ve sevdiklerimi; bilinip bilinmeyen, görülüp görülmeyen, gönle düşüp içe dert olan her türlü kötülükten, kendimden bile sakladığım korkularımdan, ansızın gelen musibetlerden, yarına dair kaygılardan, sonsuz karanlık gibi çöken umutsuzluktan ve fark etmeden sürüklendiğim günahlardan... Kazadan, beladan, nazardan, büyüden, iftiradan, hasetten... Kem bakıştan, kem sözden, kem kalpten... Gizli tuzaklardan, açık düşmanlıklardan, helak olmaktan, dünya ve ahiret zararından, korktuğum ve bilmediğim her şeyden beni uzak eyle... Sana sığındım Rabbim. Koru bizi Ya Hafîz, dualarımızı kabul eyle.",note:""},
+  {title:"Sabah Namazı Sonrası Dua",tag:"Sabah",arabic:"اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا وَرِزْقًا طَيِّبًا وَعَمَلًا مُتَقَبَّلًا",latin:"Allahümme innî es'elüke ilmen nâfi'an ve rızkan tayyiben ve amelen mütekabbela.",meaning:"Allah'ım, Senden şunları istiyorum: faydalı ilim, temiz ve güzel rızık ve kabul edilen ameller.",note:"Peygamberimiz (s.a.v.) sabah namazından sonra bu duayı okurdu. (İbn Mace)"},
+  {title:"Sabah Telkini ve Zikri",tag:"Sabah",arabic:"",latin:"Lâilaheillallahu vahdehu — Ve lâhavle ve lâ kuvvete illâ billâh.",meaning:"Sabah uyanır uyanmaz Euzu Besmele ile yataktan fırla ve şu telkinleri 19 kez yüksek sesle tekrarla:\n\"Ben sağlıklıyım. Ben müferrahım. Ben münbasitim. Ben meserretliyim. Ben neş'eli ve neşveliyim. Ben sıhhat ve afiyete mazharım. Ben bedenen, ruhen, kalben, aklen ve zihnen kuvvetliyim. Bende gayret ve çalışkanlık vardır.\"",note:"Hemen ardından abdest al ve derin bir nefes al."},
+  {title:"Sıkıntıdan Kurtuluş Duası",tag:"Sıkıntı",arabic:"حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",latin:"Hasbünallahu ve ni'mel vekîl.",meaning:"Allah bize yeter, O ne güzel vekildir.",note:"Al-i İmran Suresi 173. ayet. Peygamberimiz (s.a.v.) ve Hz. İbrahim'in zor anlarda söylediği bu söz, tevekkülün simgesidir."},
+  {title:"Tevbe 51 — Tevekkül ve İman",tag:"Ayet",arabic:"قُلْ لَنْ يُصِيبَنَا إِلَّا مَا كَتَبَ اللَّهُ لَنَا هُوَ مَوْلَانَا وَعَلَى اللَّهِ فَلْيَتَوَكَّلِ الْمُؤْمِنُونَ",latin:"Kul len yusîbenâ illâ mâ ketebellâhu lenâ, hüve mevlânâ, ve alallâhi felyetevekkelil mü'minûn.",meaning:"De ki: Allah'ın bizim için yazdığından başkası bize asla erişemez. O bizim Mevlâmızdır. Mü'minler yalnızca Allah'a dayanıp güvensinler.",note:"Tevbe Suresi 51. ayet. Kaderine rıza ve tevekkül için okunur."},
+  {title:"Yunus 104 — İman Beyanı",tag:"Ayet",arabic:"قُلْ يَا أَيُّهَا النَّاسُ إِنْ كُنْتُمْ فِي شَكٍّ مِنْ دِينِي فَلَا أَعْبُدُ الَّذِينَ تَعْبُدُونَ مِنْ دُونِ اللَّهِ وَلَكِنْ أَعْبُدُ اللَّهَ الَّذِي يَتَوَفَّاكُمْ",latin:"Kul yâ eyyühen nâsü in küntüm fî şekkin min dînî felâ a'büdüllezîne ta'büdûne min dûnillâhi velâkin a'büdüllâhellezî yeteveffâküm.",meaning:"De ki: Ey insanlar! Eğer benim dinim hakkında şüphe içindeyseniz, bilin ki ben sizin Allah'tan başka taptıklarınıza tapmam. Ben ancak sizin canınızı alacak olan Allah'a kulluk ederim.",note:"Yunus Suresi 104. ayet."},
+  {title:"Zayıflık ve Rızık Duası",tag:"Rızık",arabic:"",latin:"Allahümme innî daifun fekavvi fî ridâke da'fî ve huz ilelhayri binasiyetî vec'alil islame münteha ridaye. Allahümme innî daifün fekavvinî ve innî zelilün feizzeni ve innî fakirün ferzuknî.",meaning:"Allah'ım! Ben zayıfım, rızanı kazanma yolunda zayıflığımı güce çevir. Beni hayra yönelt, İslam'ı rızamın nihai hedefi kıl. Allah'ım! Ben zayıfım beni güçlendir, ben zelilim beni aziz kıl, ben fakirim beni rızıklandır.",note:"Duha Suresi ile birlikte okunması tavsiye edilir."},
+  {title:"Zümer 7 — Şükrün Önemi",tag:"Ayet",arabic:"إِنْ تَكْفُرُوا فَإِنَّ اللَّهَ غَنِيٌّ عَنْكُمْ وَلَا يَرْضَى لِعِبَادِهِ الْكُفْرَ وَإِنْ تَشْكُرُوا يَرْضَهُ لَكُمْ",latin:"İn tekfürû fe innallâhe ğaniyyün ankum, velâ yerdâ li ibâdihil küfr, ve in teşkürû yerdahu lekum.",meaning:"Eğer inkâr ederseniz, bu sizin aleyhinizedir; çünkü Allah'ın sizin hiçbir şeyinize ihtiyacı yoktur. Fakat O, kullarının inkârına da râzı olmaz. Şâyet inanıp şükrederseniz, bu davranışınızdan hoşnut olur.",note:"Zümer Suresi 7. ayet. Şükür ve imana teşvik için okunur."},
+  {title:"Zümer 38 — Hasbiyallah Ayeti",tag:"Ayet",arabic:"قُلْ حَسْبِيَ اللَّهُ عَلَيْهِ يَتَوَكَّلُ الْمُتَوَكِّلُونَ",latin:"Kul hasbiyallâhu aleyhi yetevekkelul mutevekkilûn.",meaning:"De ki: Allah bana yeter! Tevekkül edecek olanlar yalnızca O'na dayanıp güvensinler.",note:"Zümer Suresi 38. ayet. Sıkıntıda Allah'a tam teslimiyet ve tevekkül için okunur."},
+  {title:"Şükür Duası",tag:"Şükür",arabic:"",latin:"",meaning:"Allah'ım! Bana verdiğin sağlık, rızık, iman ve nimetlerin için Sana sonsuz şükür olsun. Kalbimi daima şükredenlerden eyle. Nimetlerini artır, bizleri sana layık kullarından eyle. Âmin.",note:""},
+  {title:"Talak 2-3 — Çıkış Yolu ve Rızık Ayeti",tag:"Ayet",arabic:"وَمَنْ يَتَّقِ اللَّهَ يَجْعَلْ لَهُ مَخْرَجًا وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ وَمَنْ يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ",latin:"Ve men yettekillahe yec'al lehu mahracâ. Ve yerzukhu min haysu lâ yahtesib, ve men yetevekkel alallâhi fe hüve hasbuh.",meaning:"Kim Allah'a karşı gelmekten sakınırsa, Allah ona bir çıkış yolu açar. Onu beklemediği yerden rızıklandırır. Kim Allah'a tevekkül ederse, O kendisine yeter. Şüphesiz Allah emrini yerine getirendir. Allah her şeye bir ölçü koymuştur.",note:"Talak Suresi 2-3. ayetler. Peygamberimiz: 'Ümmetim bu ayetle amel etseydi, Allah rızıklarını ayaklarına getirirdi.' Her gün 1000 kez okunması tavsiye edilir; okuyamayanlar 7-11-21-41 veya 101 sayılarıyla okuyabilir."},
+  {title:"Günün Hayrı ve Şerri İçin Dua",tag:"Sabah",arabic:"اللَّهُمَّ مَا كَتَبْتَ فِي هَذَا الْيَوْمِ مِنْ مُصِيبَةٍ فَحَلِّصْنِي مِنْهَا وَمَا أَنْزَلْتَ فِي هَذَا الْيَوْمِ مِنْ خَيْرٍ فَآتِنِي مِنْهُ نَصِيبًا",latin:"Allâhümme mâ ketebte fî hâzel yevmi min musîbetin fehallısnî minhâ. Ve mâ enzelte fî hâzel yevmi min hayrin fe âtinî minhü nasîbâ.",meaning:"Allah'ım! Bugün olacaklar listesine yazdığın bir musibet varsa, beni ondan kurtar. Ve bugün yeryüzüne indirdiğin bir hayır varsa, ondan bana da bir nasip ver.",note:"Bu dua kaderi değiştirmek için değil, kaderin şerrinden korunmak için okunur. Sabah okunması tavsiye edilir."},
+  {title:"İhlas Suresi Vesilesiyle Dua",tag:"Genel",arabic:"",latin:"Allâhümme innî es'elüke bi-ennî eşhedü enneke Ente'llahu lâ ilâhe illâ ente El-ehad Es-Samed ellezi lem-yelid ve lem-yûled ve lem-yekun lehû küfüven ehad.",meaning:"Allah'ım, Sen'den yardım isterim. Çünkü şehadet ederim ki Sen Allah'sın; Senden başka ilah yoktur. Birsin, Samed'sin. Doğmadın, doğurmadın. Hiçbir eşin ve benzerin yoktur.",note:"İhlas Suresi'nin içeriğini taşıyan bu dua ile yapılan istekler kabul edilir. (Ebû Dâvud, Tirmizî, İbn Mâce)"},
+  {title:"Ya Settar ve Ya Afüvv Zikri",tag:"Zikir",arabic:"",latin:"Ya Settar — Ya Afüvv",meaning:"Günde 33 kez 'Ya Settar' (Ayıpları örten) ve 33 kez 'Ya Afüvv' (Affeden, silen) esmalarını oku.\nNiyet: 'Allah'ım, dilimin afetinden ve kınadığımın kaderinden Sana sığınırım.'",note:"Başkalarının yükünü üstüne aldığını hissediyorsan veya negatif bağları kesmek istiyorsan bu zikri oku."},
+  {title:"Nazar ve Şeytan Duası",tag:"Koruma",arabic:"أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ",latin:"Eûzü bikelimâtillâhi't-tâmmeti min külli şeytânin ve hâmmetin ve min külli aynin lâmmetin.",meaning:"Her türlü şeytandan, haşereden ve kem nazardan Allah'ın tam kelimelerine sığınırım.",note:"Her gün çocuklara, sevdiklerine ve kendine oku. (Buhârî) Haşerelerden, mikroplara; görünen ve görünmeyen tehlikelerden, kem nazardan korur."},
+  {title:"Zümer 46 — Hüküm Allah'a Aittir",tag:"Ayet",arabic:"قُلِ اللَّهُمَّ فَاطِرَ السَّمَوَاتِ وَالْأَرْضِ عَالِمَ الْغَيْبِ وَالشَّهَادَةِ أَنْتَ تَحْكُمُ بَيْنَ عِبَادِكَ فِيمَا كَانُوا فِيهِ يَخْتَلِفُونَ",latin:"Kuli(A)llâhumme fâtiras semâvâti vel-ardi âlimel ğaybi veş-şehâdeti ente tahkumu beyne ibâdike fî mâ kânû fîhi yahtelifûn.",meaning:"De ki: Ey gökleri ve yeri yoktan yaratan, görüneni de görünmeyeni de bilen Allahım! Kullarının arasında, ayrılığa düştükleri şeyin hükmünü ancak Sen vereceksin.",note:"Zümer Suresi 46. ayet. Haksızlığa uğradığında, anlaşmazlık ve zulüm karşısında Allah'a havale ederken okunur."}
+].sort((a,b)=>a.title.localeCompare(b.title,'tr'));
 let activeDuaCategory = 'Tümü';
 
 function buildDuaCategories(){
